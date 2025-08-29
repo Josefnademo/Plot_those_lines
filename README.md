@@ -55,7 +55,7 @@ Toutes les User Stories sont documentées et suivies sur le [GitHub Project Boar
 - Saisir un mauvais identifiant crypto → vérifier la gestion de l’erreur (MessageBox ou Label).
 
 ## 📝 Documentation
-
+- [Rapport PDF]() : objectifs, domaine, analyse, réalisation, tests et conclusion.
 - [Rapport final](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Rapport.md) : objectifs, domaine, analyse, réalisation, tests et conclusion.
 - [Planification](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Planification.md) : tâches sur 8 semaines.
 - [Journal de travail (JDT)](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Journal-de-Travail_NademoYosef.xlsx) : suivi de l’avancement, difficultés et solutions.
