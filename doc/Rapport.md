@@ -97,19 +97,16 @@ Consulter le fichier séparé [Planification.md](https://github.com/Josefnademo/
 
 - **Tests unitaires**
 
-  - Vérifier le parsing correct du JSON.
-
-  - Vérifier la conversion timestamp → DateTime.
-
-  - Vérifier la sélection de période (7/30/90 jours).
+- Vérification du parsing correct du JSON depuis CoinGecko API.
+- Vérification de la conversion timestamp → DateTime via les méthodes d’extension.
+- Vérification de la sélection et du filtrage des périodes (7, 30, 90 jours) avec LINQ.
+- Vérification de la transformation des données JSON en séries exploitables par ScottPlot.
 
 - **Tests d’acceptation**
 
-  - Lancer l’application, saisir "bitcoin", afficher graphique 30 jours.
-
-  - Comparer Bitcoin + Ethereum → 2 courbes distinctes.
-
-  - Mauvais identifiant crypto → gestion erreur (MessageBox).
+- Lancer l’application, saisir "bitcoin" et vérifier l’affichage du graphique pour 30 jours.
+- Comparer Bitcoin + Ethereum et s’assurer que 2 courbes distinctes apparaissent correctement.
+- Saisir un identifiant invalide et vérifier la gestion de l’erreur (MessageBox ou Label).
 
 ## 6. Journal de travail (JDT)
 
