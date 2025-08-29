@@ -29,7 +29,7 @@ de séries temporelles sur des données de cryptomonnaies
 - GitHub Project – Suivi des User Stories
 
 ## 📑 User Stories
-Voir le tableau de projet GitHub: [Project Board](./https://github.com/users/Josefnademo/projects/5)
+Voir le tableau de projet GitHub: [Project Board](https://github.com/users/Josefnademo/projects/5)
 
 ## 🧪 Tests
 - Tests unitaires pour le parsing JSON.
