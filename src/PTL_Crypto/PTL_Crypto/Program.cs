@@ -1,4 +1,4 @@
-namespace Plot_those_lines
+namespace PTL_Crypto
 {
     internal static class Program
     {

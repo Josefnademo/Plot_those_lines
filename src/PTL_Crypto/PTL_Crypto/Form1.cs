@@ -1,4 +1,4 @@
-namespace Plot_those_lines
+namespace PTL_Crypto
 {
     public partial class Form1 : Form
     {
