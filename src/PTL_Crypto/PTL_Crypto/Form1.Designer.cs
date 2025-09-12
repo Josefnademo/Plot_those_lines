@@ -35,15 +35,17 @@
             button4 = new Button();
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
             button5 = new Button();
+            textBoxCoin = new TextBox();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(630, 504);
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            button1.FlatAppearance.BorderSize = 0;
+            button1.Location = new Point(548, 510);
             button1.Name = "button1";
-            button1.Size = new Size(230, 64);
+            button1.Size = new Size(312, 72);
             button1.TabIndex = 0;
-            button1.Text = "Importer un fichier";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -55,6 +57,7 @@
             button2.TabIndex = 1;
             button2.Text = "7j";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -64,6 +67,7 @@
             button3.TabIndex = 2;
             button3.Text = "30j";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button4
             // 
@@ -73,6 +77,7 @@
             button4.TabIndex = 3;
             button4.Text = "1a";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // formsPlot1
             // 
@@ -93,6 +98,15 @@
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
+            // textBoxCoin
+            // 
+            textBoxCoin.BackColor = Color.SteelBlue;
+            textBoxCoin.Location = new Point(568, 70);
+            textBoxCoin.Name = "textBoxCoin";
+            textBoxCoin.Size = new Size(292, 23);
+            textBoxCoin.TabIndex = 6;
+            textBoxCoin.TextChanged += textBox1_TextChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -101,6 +115,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(975, 649);
+            Controls.Add(textBoxCoin);
             Controls.Add(button5);
             Controls.Add(formsPlot1);
             Controls.Add(button4);
@@ -112,6 +127,7 @@
             Text = "PTL_Crypto";
             Load += Form1_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -122,5 +138,6 @@
         private Button button4;
         private ScottPlot.WinForms.FormsPlot formsPlot1;
         private Button button5;
+        private TextBox textBoxCoin;
     }
 }
