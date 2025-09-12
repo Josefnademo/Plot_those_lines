@@ -7,7 +7,12 @@ using ScottPlot;
 
 namespace PTL_Crypto
 {
-    internal class CryptoPrice
+    //Role: to represent a single price data.
+
+    /*Methods:*/
+    public class CryptoPrice
     {
+        public DateTime Time { get; set; }
+        public double Price { get; set; }
     }
 }

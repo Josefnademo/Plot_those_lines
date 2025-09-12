@@ -34,6 +34,7 @@
             button3 = new Button();
             button4 = new Button();
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
+            button5 = new Button();
             SuspendLayout();
             // 
             // button1
@@ -48,7 +49,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(115, 70);
+            button2.Location = new Point(162, 70);
             button2.Name = "button2";
             button2.Size = new Size(40, 25);
             button2.TabIndex = 1;
@@ -57,7 +58,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(161, 70);
+            button3.Location = new Point(208, 70);
             button3.Name = "button3";
             button3.Size = new Size(40, 25);
             button3.TabIndex = 2;
@@ -66,7 +67,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(207, 70);
+            button4.Location = new Point(254, 70);
             button4.Name = "button4";
             button4.Size = new Size(40, 25);
             button4.TabIndex = 3;
@@ -82,6 +83,16 @@
             formsPlot1.TabIndex = 4;
             formsPlot1.Load += formsPlot1_Load;
             // 
+            // button5
+            // 
+            button5.Location = new Point(116, 70);
+            button5.Name = "button5";
+            button5.Size = new Size(40, 25);
+            button5.TabIndex = 5;
+            button5.Text = "1j";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -90,6 +101,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(975, 649);
+            Controls.Add(button5);
             Controls.Add(formsPlot1);
             Controls.Add(button4);
             Controls.Add(button3);
@@ -109,5 +121,6 @@
         private Button button3;
         private Button button4;
         private ScottPlot.WinForms.FormsPlot formsPlot1;
+        private Button button5;
     }
 }
