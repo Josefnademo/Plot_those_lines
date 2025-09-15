@@ -13,7 +13,7 @@ et le suivi de l’avancement via un journal de travail (JDT).
 - Import des données JSON via API CoinGecko.
 - Affichage interactif des prix sur un graphique (ScottPlot).
 - Choix de la cryptomonnaie (Bitcoin, Ethereum, etc.).
-- Sélection de la période d’analyse (7, 30 ou 90 jours).
+- Sélection de la période d’analyse (1, 7, 30 ou 365 jours).
 - Comparaison de plusieurs séries sur un même graphique.
 - Gestion des erreurs réseau ou identifiant invalide.
 - Méthodes d’extension et utilisation de LINQ pour le traitement des données.
