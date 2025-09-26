@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 
 namespace PTL_Crypto
@@ -17,7 +18,7 @@ namespace PTL_Crypto
         private readonly HttpClient _httpClient = new HttpClient(); //creating an object of the HttpClient class, which is used to send HTTP requests
 
         // Fetch cryptocurrency price data from CoinGecko API
-        public Task<List<CryptoPrice>> GetCryptoPricesAsync(string coin, int days)
+        public async Task<List<CryptoPrice>> GetCryptoPricesAsync(string coin, int days)
         {
             try
             {

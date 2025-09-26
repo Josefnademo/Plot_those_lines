@@ -10,30 +10,42 @@ using static ScottPlot.Generate;
 
 namespace PTL_Crypto
 {
-// Purpose: Manage the graphical display with ScottPlot.
+    // Purpose: Manage the graphical display with ScottPlot.
 
-/*Methods:*/
+    /*Methods:*/
     internal class PlotManager
     {
-        public void PlotData(FormsPlot formsPlot, List<CryptoPrice>prices)
+        public void PlotData(FormsPlot formsPlot, Dictionary<string, List<CryptoPrice>> allPrices)
         {
-            // Convert DateTime and Price to arrays for plotting
-            double[] dataX =prices.Select(p => p.Time.ToOADate()).ToArray();
-            double[] dataY = prices.Select(p => p.Price).ToArray();
-
-            //Clear all old charts series
+            // Clearing previous charts
             formsPlot.Plot.Clear();
 
-            // Label the axes and title
-            formsPlot.Plot.Title($"Prix de CryptoCurrencyPrice  actuel");
-            formsPlot.Plot.XLabel("Date");
-            formsPlot.Plot.YLabel("Prix (USD)");
+            // LINQ: go through each crypto and add Scatter
+            allPrices.ToList().ForEach(kvp =>
+            {
+                string label = kvp.Key;
+                List<CryptoPrice> prices = kvp.Value;
 
-            // Added with new API (ScottPlot 5)
-            formsPlot.Plot.Add.Scatter(dataX, dataY);
+                // Convert DateTime and Price to arrays for plotting
+                double[] dataX = prices.Select(p => p.Time.ToOADate()).ToArray();
+                double[] dataY = prices.Select(p => p.Price).ToArray();
 
-            // Update control
-            formsPlot.Refresh();
-        }
+                //Clear all old charts series
+                formsPlot.Plot.Clear();
+
+                // Label the axes and title
+                formsPlot.Plot.Add.Scatter(dataX, dataY, label: label);
+                formsPlot.Plot.XAxis.DateTimeFormat(true);
+                formsPlot.Plot.Legend();
+                formsPlot.Plot.Title($"Prix de {label}");
+                formsPlot.Plot.XLabel("Date");
+                formsPlot.Plot.YLabel("Prix (USD)");
+
+                // Added with new API (ScottPlot 5)
+                formsPlot.Plot.Add.Scatter(dataX, dataY);
+
+                // Update control
+                formsPlot.Refresh();
+            }
     }
-}
+    }   } 
