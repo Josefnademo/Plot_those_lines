@@ -1,4 +1,4 @@
-using ScottPlot;
+﻿using ScottPlot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,7 +22,24 @@ namespace PTL_Crypto
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Create an instance of FileClient to read local JSON files
+            var fileClient = new FileClient();
 
+            // Define the base path where local JSON data files are stored
+            // "..\\..\\..\\..\\local_data" means: go up 4 folders from the exe path,
+            // then enter the "local_data" folder
+            string basePath = Path.Combine(Application.StartupPath, "..", "..", "..", "..", "local_data");
+
+            // Load data for each cryptocurrency from its corresponding JSON file
+            var allPrices = new Dictionary<string, List<CryptoPrice>>
+{
+    { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_7days.json")) },
+    { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_7days.json")) },
+    { "SOL", fileClient.LoadPricesFromFile(Path.Combine(basePath, "solana_7days.json")) },
+    { "PEPE", fileClient.LoadPricesFromFile(Path.Combine(basePath, "pepe_7days.json")) }
+};
+            // Plot data on the chart using PlotManager
+            _plotManager.PlotData(formsPlot1, allPrices);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,26 +66,32 @@ namespace PTL_Crypto
             // Fetch prices from API
             var prices = await _apiClient.GetCryptoPricesAsync(coin, days);
 
+            // Put data in Dictionary
+            var allPrices = new Dictionary<string, List<CryptoPrice>>
+    {
+        { coin.ToUpper(), prices }
+    };
+
             // Plot data on the chart using PlotManager
-            _plotManager.PlotData(formsPlot1, prices);
+            _plotManager.PlotData(formsPlot1, allPrices);
         }
 
-        private void button5_Click(object sender, EventArgs e) // 1 day button
+        private async void button5_Click(object sender, EventArgs e) // 1 day button
         {
             await LoadCryptoData(1);
         }
 
-        private void button2_Click(object sender, EventArgs e) // 7 day button
+        private async void button2_Click(object sender, EventArgs e) // 7 day button
         {
             await LoadCryptoData(7);
         }
 
-        private void button3_Click(object sender, EventArgs e) // 30 day button
+        private async void button3_Click(object sender, EventArgs e) // 30 day button
         {
             await LoadCryptoData(30);
         }
 
-        private void button4_Click(object sender, EventArgs e) // 365 day button
+        private async void button4_Click(object sender, EventArgs e) // 365 day button
         {
             await LoadCryptoData(365);
         }

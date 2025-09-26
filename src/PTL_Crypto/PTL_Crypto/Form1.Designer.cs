@@ -105,6 +105,7 @@
             textBoxCoin.Name = "textBoxCoin";
             textBoxCoin.Size = new Size(292, 23);
             textBoxCoin.TabIndex = 6;
+            textBoxCoin.Text = "Search a crypto";
             textBoxCoin.TextChanged += textBox1_TextChanged;
             // 
             // Form1
