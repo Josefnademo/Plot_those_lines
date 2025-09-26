@@ -23,3 +23,10 @@
   - Vous ne faites toujours pas référence à vos maquettes. Pire: vous avez un test qui dit "Dans l’interface, je peux sélectionner plusieurs cryptomonnaies.", mais il n'y a rien dans votre maquette qui propose un mode de sélection
   - Je n'arrive toujours pas à comprendre le fonctionnement de votre application sur la base de ce que vous me présentez comme analyse
 - Pour les détails: regardez les commentaires dans les stories elle-même
+
+## 26.9
+
+- Mettez la maquette dans la description de l'[issue](https://github.com/Josefnademo/Plot_those_lines/issues/19)
+- Concentrez-vous sur cette story, qui n'a pas besoin de l'API puisqu'elle se base sur les données stockées
+- Formulez une vraie user story qui concerne l'API. Selon mon interprétation de ce que vous avez écrit, cela pourrait être quelquechose du genre: quand on démarre l'app, on a un message qu'on va chercher des données récentes sur CoinGecko. Quand on les a récupérées, un message annonce la disponibilté de nouvelles données (ou signale une erreur)
+- Votre gitignore est un peu juste. Il n'exclut pas les fichiers temporaires de contexte de visual studio (contenu du dossier `.vs`). Procédez à un [refresh](https://sigalambigha.home.blog/2020/03/11/how-to-refresh-gitignore/) svp
