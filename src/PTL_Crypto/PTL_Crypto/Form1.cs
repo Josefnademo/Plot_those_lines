@@ -25,15 +25,14 @@ namespace PTL_Crypto
             // Create an instance of FileClient to read local JSON files
             var fileClient = new FileClient();
 
-            // Define the base path where local JSON data files are stored
-            // "..\\..\\..\\..\\local_data" means: go up 4 folders from the exe path,
-            // then enter the "local_data" folder
-            string basePath = Path.Combine(Application.StartupPath, "..", "..", "..", "..", "local_data");
+            // Define the base path where local JSON data files are stored,then enter the "local_data" folder
+            string basePath = Path.Combine(Application.StartupPath, "..", "..", "..", "..", "..", "local_data");
 
             // Load data for each cryptocurrency from its corresponding JSON file
             var allPrices = new Dictionary<string, List<CryptoPrice>>
 {
-    { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_7days.json")) },
+   
+    { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_1y.json")) },
     { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_7days.json")) },
     { "SOL", fileClient.LoadPricesFromFile(Path.Combine(basePath, "solana_7days.json")) },
     { "PEPE", fileClient.LoadPricesFromFile(Path.Combine(basePath, "pepe_7days.json")) }

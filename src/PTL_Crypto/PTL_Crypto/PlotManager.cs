@@ -15,37 +15,42 @@ namespace PTL_Crypto
     /*Methods:*/
     internal class PlotManager
     {
+        /// <summary>
+        /// Plots multiple cryptocurrency price series on the same ScottPlot chart.
+        /// The dictionary key is used as the label for each series.
+        /// </summary>
+        /// <param name="formsPlot">The FormsPlot control to draw on.</param>
+        /// <param name="allPrices">Dictionary with coin label as key and list of CryptoPrice as value.</param>
         public void PlotData(FormsPlot formsPlot, Dictionary<string, List<CryptoPrice>> allPrices)
         {
+
             // Clearing previous charts
             formsPlot.Plot.Clear();
 
             // LINQ: go through each crypto and add Scatter
             allPrices.ToList().ForEach(kvp =>
             {
-                string label = kvp.Key;
+                string label = kvp.Key;             // Coin name, used as label
                 List<CryptoPrice> prices = kvp.Value;
 
                 // Convert DateTime and Price to arrays for plotting
                 double[] dataX = prices.Select(p => p.Time.ToOADate()).ToArray();
                 double[] dataY = prices.Select(p => p.Price).ToArray();
 
-                //Clear all old charts series
-                formsPlot.Plot.Clear();
+                // Add scatter series
+                var scatter = formsPlot.Plot.Add.Scatter(dataX, dataY);
 
-                // Label the axes and title
-                formsPlot.Plot.Add.Scatter(dataX, dataY, label: label);
-                formsPlot.Plot.XAxis.DateTimeFormat(true);
-                formsPlot.Plot.Legend();
+                // Assign label for legend
+                scatter.Label = label; ;
+
+                // Set chart title and axis labels
+                
                 formsPlot.Plot.Title($"Prix de {label}");
                 formsPlot.Plot.XLabel("Date");
-                formsPlot.Plot.YLabel("Prix (USD)");
-
-                // Added with new API (ScottPlot 5)
-                formsPlot.Plot.Add.Scatter(dataX, dataY);
+                formsPlot.Plot.YLabel("Price (USD)");
 
                 // Update control
                 formsPlot.Refresh();
-            }
-    }
-    }   } 
+            });
+    }   }
+}   
