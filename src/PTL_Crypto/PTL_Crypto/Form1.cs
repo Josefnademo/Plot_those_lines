@@ -33,7 +33,7 @@ namespace PTL_Crypto
 {
    
     { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_1y.json")) },
-    { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_7days.json")) },
+    { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_1y.json")) },
     { "SOL", fileClient.LoadPricesFromFile(Path.Combine(basePath, "solana_7days.json")) },
     { "PEPE", fileClient.LoadPricesFromFile(Path.Combine(basePath, "pepe_7days.json")) }
 };
@@ -59,7 +59,7 @@ namespace PTL_Crypto
 
             if (string.IsNullOrEmpty(coin))
             {
-                MessageBox.Show("Recherche de crypto");
+                MessageBox.Show("Entre un nom d'une crypto monnaie");
                 return;
             }
             // Fetch prices from API

@@ -1,10 +1,12 @@
 ﻿using ScottPlot;
+using ScottPlot.Triangulation;
 using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static ScottPlot.Generate;
 
@@ -15,6 +17,9 @@ namespace PTL_Crypto
     /*Methods:*/
     internal class PlotManager
     {
+        // Storage of all ScatterPlots for deletion/restoration
+        private readonly List<IPlottable> currentPlots = new List<IPlottable>();
+
         /// <summary>
         /// Plots multiple cryptocurrency price series on the same ScottPlot chart.
         /// The dictionary key is used as the label for each series.
@@ -26,6 +31,7 @@ namespace PTL_Crypto
 
             // Clearing previous charts
             formsPlot.Plot.Clear();
+            currentPlots.Clear();
 
             // LINQ: go through each crypto and add Scatter
             allPrices.ToList().ForEach(kvp =>
@@ -41,10 +47,15 @@ namespace PTL_Crypto
                 var scatter = formsPlot.Plot.Add.Scatter(dataX, dataY);
 
                 // Assign label for legend
-                scatter.Label = label; ;
+                scatter.Label = label;
+                scatter.MarkerSize = 4;
+                scatter.LineWidth = 1;
+                scatter.MarkerShape = MarkerShape.OpenCircle;
+
+                // Enable display of date on the X-axis
+               // scatter.DateTimeX = true;
 
                 // Set chart title and axis labels
-                
                 formsPlot.Plot.Title($"Prix de {label}");
                 formsPlot.Plot.XLabel("Date");
                 formsPlot.Plot.YLabel("Price (USD)");
@@ -52,5 +63,41 @@ namespace PTL_Crypto
                 // Update control
                 formsPlot.Refresh();
             });
-    }   }
+    }
+        // Deleting charts
+        public void ClearPlots(FormsPlot formsPlot)
+        {
+            currentPlots.ForEach(p => formsPlot.Plot.Remove(p));
+            currentPlots.Clear();
+            formsPlot.Refresh();
+        }
+
+       /* // Restoring charts
+        public void RestorePlots(FormsPlot formsPlot)
+        {
+            currentPlots.ForEach(p => formsPlot.Plot.Add.Scatter(p));
+            formsPlot.Refresh();
+        }*/
+
+        // Importing a JSON file and returning a List<CryptoPrice>
+        public List<CryptoPrice> LoadFromJsonFile(string filePath)
+        {
+            string json = File.ReadAllText(filePath);
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            if (!root.TryGetProperty("prices", out var pricesEl))
+                return new List<CryptoPrice>();
+
+            return pricesEl.EnumerateArray()
+                .Select(el =>
+                {
+                    long unixMs = el[0].GetInt64();
+                    System.DateTime dt = System.DateTimeOffset.FromUnixTimeMilliseconds(unixMs).DateTime;
+                    double price = el[1].GetDouble();
+                    return new CryptoPrice { Time = dt, Price = price };
+                })
+                .ToList();
+        }
+    }
+
 }   
