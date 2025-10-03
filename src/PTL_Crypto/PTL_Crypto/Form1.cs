@@ -11,7 +11,7 @@ namespace PTL_Crypto
 {
     public partial class Form1 : Form
     {
-        //Creat
+        // Instancies
         private readonly ApiClient _apiClient = new ApiClient();
         private readonly PlotManager _plotManager = new PlotManager();
 
@@ -20,25 +20,32 @@ namespace PTL_Crypto
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
-            // Create an instance of FileClient to read local JSON files
-            var fileClient = new FileClient();
+            // Downloading a list of coins from CoinGecko
+            var coins = await _apiClient.GetCoinsListAsync();
 
-            // Define the base path where local JSON data files are stored,then enter the "local_data" folder
-            string basePath = Path.Combine(Application.StartupPath, "..", "..", "..", "..", "..", "local_data");
+            // Фильтруем на всякий случай
+            coins = coins.Where(c => !string.IsNullOrWhiteSpace(c.Id) &&
+                                     !string.IsNullOrWhiteSpace(c.Symbol) &&
+                                     !string.IsNullOrWhiteSpace(c.Name))
+                         .ToList();
 
-            // Load data for each cryptocurrency from its corresponding JSON file
-            var allPrices = new Dictionary<string, List<CryptoPrice>>
-{
-   
-    { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_1y.json")) },
-    { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_1y.json")) },
-    { "SOL", fileClient.LoadPricesFromFile(Path.Combine(basePath, "solana_7days.json")) },
-    { "PEPE", fileClient.LoadPricesFromFile(Path.Combine(basePath, "pepe_7days.json")) }
-};
-            // Plot data on the chart using PlotManager
-            _plotManager.PlotData(formsPlot1, allPrices);
+            if (coins.Count == 0)
+            {
+                MessageBox.Show("La liste des pièces est vide");
+                return;
+            }
+
+            // Привязываем источник данных ComboBox
+            comboBoxCoins.DataSource = coins;
+            comboBoxCoins.DisplayMember = "Name"; // что показывать
+            comboBoxCoins.ValueMember = "Id";     // что использовать для API
+
+            // Автодополнение
+            comboBoxCoins.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBoxCoins.AutoCompleteSource = AutoCompleteSource.ListItems;
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -52,7 +59,8 @@ namespace PTL_Crypto
         }
 
         // Load crypto data and plot chart using textbox and buttons
-        private async Task LoadCryptoData(int days) {
+        private async Task LoadCryptoData(int days)
+        {
 
             // Get coin name from search bar
             string coin = textBoxCoin.Text.Trim().ToLower();
@@ -73,6 +81,10 @@ namespace PTL_Crypto
 
             // Plot data on the chart using PlotManager
             _plotManager.PlotData(formsPlot1, allPrices);
+
+           /* // Automatic axis adjustment
+            formsPlot1.Plot.AxisAuto();
+            formsPlot1.Refresh();*/
         }
 
         private async void button5_Click(object sender, EventArgs e) // 1 day button
@@ -99,5 +111,37 @@ namespace PTL_Crypto
         {
 
         }
+
+        private async void comboBoxCoins_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxCoins.SelectedItem is CoinInfo selectedCoin)
+            {
+                // when a person selects from the ComboBox → fill the TextBox
+                textBoxCoin.Text = selectedCoin.Id;
+                // loading 7 days of data bydefault
+                await LoadCryptoData(7);  
+            }
+        }
     }
 }
+/*
+ test with json local data:
+
+// Create an instance of FileClient to read local JSON files
+            var fileClient = new FileClient();
+
+            // Define the base path where local JSON data files are stored,then enter the "local_data" folder
+            string basePath = Path.Combine(Application.StartupPath, "..", "..", "..", "..", "..", "local_data");
+
+            // Load data for each cryptocurrency from its corresponding JSON file
+            var allPrices = new Dictionary<string, List<CryptoPrice>>
+{
+
+    { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_1y.json")) },
+    { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_1y.json")) },
+    { "SOL", fileClient.LoadPricesFromFile(Path.Combine(basePath, "solana_7days.json")) },
+    { "PEPE", fileClient.LoadPricesFromFile(Path.Combine(basePath, "pepe_7days.json")) }
+};
+ // Plot data on the chart using PlotManager
+            _plotManager.PlotData(formsPlot1, allPrices);
+ */

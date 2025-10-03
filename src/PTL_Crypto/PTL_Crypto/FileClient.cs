@@ -39,9 +39,6 @@ namespace PTL_Crypto
                 .ToList();
 
             return list;
-
         } 
-
-
     }
 }

@@ -1,11 +1,12 @@
 ﻿using ScottPlot;
+using ScottPlot.Colormaps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Net.Http;
 
 
 namespace PTL_Crypto
@@ -52,5 +53,43 @@ namespace PTL_Crypto
             }
 
         }
+
+        public async Task<List<CoinInfo>> GetCoinsListAsync()
+        {
+            try
+            {
+                string url = "https://api.coingecko.com/api/v3/coins/list";
+                // http request
+                string json = await _httpClient.GetStringAsync(url);
+
+                // Парсим JSON
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                // LINQ: выбираем только валидные записи
+                var coins = root.EnumerateArray()
+                                .Select(el => new CoinInfo
+                                {
+                                    Id = el.GetProperty("id").GetString(),
+                                    Symbol = el.GetProperty("symbol").GetString(),
+                                    Name = el.GetProperty("name").GetString()
+                                })
+                                .Where(c => !string.IsNullOrWhiteSpace(c.Id) &&
+                                            !string.IsNullOrWhiteSpace(c.Symbol) &&
+                                            !string.IsNullOrWhiteSpace(c.Name))
+                                .ToList();
+
+                return coins;
+            }
+            
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading coin list: " + ex.Message);
+                return new List<CoinInfo>();
+            }
+        }
+
     }
 }
+// ?? - null-coalescing, operatorChecks: if the value to the left of ?? is null, then the value on the right is taken.
+// If it is not null, then the value on the left is taken.

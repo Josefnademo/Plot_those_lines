@@ -36,6 +36,7 @@
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
             button5 = new Button();
             textBoxCoin = new TextBox();
+            comboBoxCoins = new ComboBox();
             SuspendLayout();
             // 
             // button1
@@ -107,6 +108,15 @@
             textBoxCoin.TabIndex = 6;
             textBoxCoin.TextChanged += textBox1_TextChanged;
             // 
+            // comboBoxCoins
+            // 
+            comboBoxCoins.FormattingEnabled = true;
+            comboBoxCoins.Location = new Point(441, 70);
+            comboBoxCoins.Name = "comboBoxCoins";
+            comboBoxCoins.Size = new Size(121, 23);
+            comboBoxCoins.TabIndex = 7;
+            comboBoxCoins.SelectedIndexChanged += comboBoxCoins_SelectedIndexChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -115,6 +125,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(975, 649);
+            Controls.Add(comboBoxCoins);
             Controls.Add(textBoxCoin);
             Controls.Add(button5);
             Controls.Add(formsPlot1);
@@ -139,5 +150,6 @@
         private ScottPlot.WinForms.FormsPlot formsPlot1;
         private Button button5;
         private TextBox textBoxCoin;
+        private ComboBox comboBoxCoins;
     }
 }
