@@ -25,7 +25,7 @@ namespace PTL_Crypto
             // Downloading a list of coins from CoinGecko
             var coins = await _apiClient.GetCoinsListAsync();
 
-            // Фильтруем на всякий случай
+            // filter just in case
             coins = coins.Where(c => !string.IsNullOrWhiteSpace(c.Id) &&
                                      !string.IsNullOrWhiteSpace(c.Symbol) &&
                                      !string.IsNullOrWhiteSpace(c.Name))
@@ -37,12 +37,12 @@ namespace PTL_Crypto
                 return;
             }
 
-            // Привязываем источник данных ComboBox
+            // Binding the ComboBox data source
             comboBoxCoins.DataSource = coins;
-            comboBoxCoins.DisplayMember = "Name"; // что показывать
-            comboBoxCoins.ValueMember = "Id";     // что использовать для API
+            comboBoxCoins.DisplayMember = "Name"; // what to show
+            comboBoxCoins.ValueMember = "Id";     // Id for API
 
-            // Автодополнение
+            // Autocompletion
             comboBoxCoins.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxCoins.AutoCompleteSource = AutoCompleteSource.ListItems;
 
@@ -70,23 +70,26 @@ namespace PTL_Crypto
                 MessageBox.Show("Entre un nom d'une crypto monnaie");
                 return;
             }
-            // Fetch prices from API
-            var prices = await _apiClient.GetCryptoPricesAsync(coin, days);
 
-            // Put data in Dictionary
-            var allPrices = new Dictionary<string, List<CryptoPrice>>
-    {
-        { coin.ToUpper(), prices }
-    };
+            try
+            {
+                // Fetch prices from API
+                var prices = await _apiClient.GetCryptoPricesAsync(coin, days);
 
-            // Plot data on the chart using PlotManager
-            _plotManager.PlotData(formsPlot1, allPrices);
+                // Put data in Dictionary
+                var allPrices = new Dictionary<string, List<CryptoPrice>>
+                 {
+                   { coin.ToUpper(), prices }
+                 };
 
-           /* // Automatic axis adjustment
-            formsPlot1.Plot.AxisAuto();
-            formsPlot1.Refresh();*/
+                // Plot data on the chart using PlotManager
+                _plotManager.PlotData(formsPlot1, allPrices);
+            }
+            catch
+            {
+                MessageBox.Show("Impossible de récupérer les données depuis l'API.");
+            }
         }
-
         private async void button5_Click(object sender, EventArgs e) // 1 day button
         {
             await LoadCryptoData(1);
@@ -116,10 +119,17 @@ namespace PTL_Crypto
         {
             if (comboBoxCoins.SelectedItem is CoinInfo selectedCoin)
             {
-                // when a person selects from the ComboBox → fill the TextBox
-                textBoxCoin.Text = selectedCoin.Id;
-                // loading 7 days of data bydefault
-                await LoadCryptoData(7);  
+                try
+                {
+                    // when a person selects from the ComboBox → fill the TextBox
+                    textBoxCoin.Text = selectedCoin.Id;
+                    // loading 7 days of data bydefault
+                    await LoadCryptoData(7);
+                }
+                catch
+                {
+                    MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
+                }
             }
         }
     }

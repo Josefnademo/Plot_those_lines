@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace PTL_Crypto
 {
-    //Role: Connect to the CoinGecko API.
-
-    /*Methods:*/
+    /// <summary>
+    /// Role: Connect to the CoinGecko API.
+    /// </summary>
     internal class ApiClient
     {
         private readonly HttpClient _httpClient = new HttpClient(); //creating an object of the HttpClient class, which is used to send HTTP requests
@@ -53,7 +53,10 @@ namespace PTL_Crypto
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<CoinInfo>> GetCoinsListAsync()
         {
             try

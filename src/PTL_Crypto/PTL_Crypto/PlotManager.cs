@@ -31,7 +31,7 @@ namespace PTL_Crypto
 
             // Clearing previous charts
             formsPlot.Plot.Clear();
-            currentPlots.Clear();
+            
 
             // LINQ: go through each crypto and add Scatter
             allPrices.ToList().ForEach(kvp =>
@@ -53,7 +53,7 @@ namespace PTL_Crypto
                 scatter.MarkerShape = MarkerShape.OpenCircle;
 
                 // Enable display of date on the X-axis
-               // scatter.DateTimeX = true;
+                formsPlot.Plot.Axes.DateTimeTicksBottom();
 
                 // Set chart title and axis labels
                 formsPlot.Plot.Title($"Prix de {label}");
@@ -72,14 +72,22 @@ namespace PTL_Crypto
             formsPlot.Refresh();
         }
 
-       /* // Restoring charts
-        public void RestorePlots(FormsPlot formsPlot)
+        /// <summary>
+        /// Restoring charts
+        /// </summary>
+        /// <param name="formsPlot"></param>
+      /* public void RestorePlots(FormsPlot formsPlot)
         {
-            currentPlots.ForEach(p => formsPlot.Plot.Add.Scatter(p));
+            currentPlots
+                .ToList()                    
+                .ForEach(p => formsPlot.Plot.Add.Scatter(p)); //Add accepts IPlottable directly
+
             formsPlot.Refresh();
         }*/
 
-        // Importing a JSON file and returning a List<CryptoPrice>
+
+
+        /// Importing a JSON file and returning a List<CryptoPrice>
         public List<CryptoPrice> LoadFromJsonFile(string filePath)
         {
             string json = File.ReadAllText(filePath);

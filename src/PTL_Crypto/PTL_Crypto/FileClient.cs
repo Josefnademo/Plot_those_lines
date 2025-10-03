@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -7,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace PTL_Crypto
 {
+    /// <summary>
+    /// Reads JSON
+    /// </summary>
     public class FileClient
     {
         // Reads JSON from a local file and converts into a list of CryptoPrice objects
-        public List<CryptoPrice> LoadPricesFromFile(string filePath)
+        public List<CryptoPrice> LoadPricesFromFile(string filePath, TextBox textBoxRawData = null)
         {
             // Read JSON text from the file
             string json = File.ReadAllText(filePath);
@@ -29,14 +33,24 @@ namespace PTL_Crypto
                 .Select(el =>
                 {
                     // Element format: [timestampMs, priceUsd]
-                    long ms = Convert.ToInt64(el[0].GetDouble());
-                    DateTime time = DateTimeOffset.FromUnixTimeMilliseconds(ms).DateTime;
+                    long unixMs = el[0].GetInt64();
+                    DateTime date = DateTimeOffset.FromUnixTimeMilliseconds(unixMs).DateTime;
 
                     double price = el[1].GetDouble();
 
-                    return new CryptoPrice { Time = time, Price = price };
+                    return new CryptoPrice { Time = date, Price = price };
                 })
                 .ToList();
+
+            // LINQ: generate strings for the TextBox (only if a TextBox is passed)
+            if (textBoxRawData != null)
+            {
+                var lines = list
+                    .Select(p => $"{p.Time:G} : {p.Price} USD")
+                    .ToArray();
+
+                textBoxRawData.Text = string.Join(Environment.NewLine, lines);
+            }
 
             return list;
         } 

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PTL_Crypto
 {
+    /// <summary>
+    /// Contain Coin information and Override it ToString() to prevent Unkown values
+    /// </summary>
     public class CoinInfo
     {
 

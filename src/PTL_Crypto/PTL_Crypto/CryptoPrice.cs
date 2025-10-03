@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace PTL_Crypto
 {
-    //Role: to represent a single price data.
+    /// <summary>
+    /// Role: to represent a single price data.
+    /// </summary>
     public class CryptoPrice
     {
         public DateTime Time { get; set; } // Date and time of the price
