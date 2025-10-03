@@ -3,32 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\plotmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\plotmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\cryptoprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\cryptoprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\plotmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\plotmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\fileclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\fileclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}|UnitTest_CryptoPrice\\UnitTest_CryptoPrice.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\unittest_cryptoprice\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}|UnitTest_CryptoPrice\\UnitTest_CryptoPrice.csproj|solutionrelative:unittest_cryptoprice\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\cryptoprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\cryptoprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\coininfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\coininfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|c:\\users\\pn25kdv\\documents\\github\\plot_those_lines\\src\\ptl_crypto\\ptl_crypto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|solutionrelative:ptl_crypto\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4819868E-3717-41F1-BF9E-D6AA70DA30B5}|PTL_Crypto\\PTL_Crypto.csproj|C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\ptl_crypto\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -46,11 +50,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Form1.cs [Conception]",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\Form1.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\Form1.cs",
@@ -63,13 +67,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\Form1.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\Form1.cs",
               "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\Form1.cs",
               "RelativeToolTip": "PTL_Crypto\\Form1.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAvwC4AAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-05T14:15:58.562Z",
               "IsPinned": true,
@@ -77,39 +81,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PlotManager.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\PlotManager.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\PlotManager.cs",
               "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\PlotManager.cs",
               "RelativeToolTip": "PTL_Crypto\\PlotManager.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAwwC4AAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAcwCsAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-05T11:56:31.444Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ApiClient.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\ApiClient.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\ApiClient.cs",
               "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\ApiClient.cs",
               "RelativeToolTip": "PTL_Crypto\\ApiClient.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAgwEUAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwCQAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-05T11:56:14.787Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "CryptoPrice.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\CryptoPrice.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\CryptoPrice.cs",
               "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\CryptoPrice.cs",
               "RelativeToolTip": "PTL_Crypto\\CryptoPrice.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-05T11:52:26.12Z",
               "EditorCaption": ""
@@ -122,27 +126,40 @@
               "RelativeDocumentMoniker": "PTL_Crypto\\FileClient.cs",
               "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\FileClient.cs",
               "RelativeToolTip": "PTL_Crypto\\FileClient.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAQwCwAAABTAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAswCIAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-26T11:35:58.148Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\UnitTest_CryptoPrice\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "UnitTest_CryptoPrice\\UnitTest1.cs",
+              "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\UnitTest_CryptoPrice\\UnitTest1.cs",
+              "RelativeToolTip": "UnitTest_CryptoPrice\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-03T14:22:33.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "CoinInfo.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\CoinInfo.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\CoinInfo.cs",
               "ToolTip": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\CoinInfo.cs",
               "RelativeToolTip": "PTL_Crypto\\CoinInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-03T12:19:32.391Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\Program.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\Program.cs",
@@ -155,7 +172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Users\\pn25kdv\\Documents\\GitHub\\Plot_those_lines\\src\\PTL_Crypto\\PTL_Crypto\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "PTL_Crypto\\Form1.Designer.cs",

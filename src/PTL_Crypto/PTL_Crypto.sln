@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTL_Crypto", "PTL_Crypto\PTL_Crypto.csproj", "{4819868E-3717-41F1-BF9E-D6AA70DA30B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest_CryptoPrice", "UnitTest_CryptoPrice\UnitTest_CryptoPrice.csproj", "{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4819868E-3717-41F1-BF9E-D6AA70DA30B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4819868E-3717-41F1-BF9E-D6AA70DA30B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4819868E-3717-41F1-BF9E-D6AA70DA30B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5D8DC9-9EAE-49D1-BCD1-A4195065ECD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
