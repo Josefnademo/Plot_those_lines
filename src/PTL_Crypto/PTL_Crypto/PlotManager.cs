@@ -29,9 +29,7 @@ namespace PTL_Crypto
         public void PlotData(FormsPlot formsPlot, Dictionary<string, List<CryptoPrice>> allPrices)
         {
 
-            // Clearing previous charts
-            formsPlot.Plot.Clear();
-            
+           
 
             // LINQ: go through each crypto and add Scatter
             allPrices.ToList().ForEach(kvp =>

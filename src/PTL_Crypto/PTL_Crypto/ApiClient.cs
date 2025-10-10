@@ -65,11 +65,11 @@ namespace PTL_Crypto
                 // http request
                 string json = await _httpClient.GetStringAsync(url);
 
-                // Парсим JSON
+                // Parsing JSON
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
 
-                // LINQ: выбираем только валидные записи
+                // LINQ: Selecting Only Valid Records
                 var coins = root.EnumerateArray()
                                 .Select(el => new CoinInfo
                                 {

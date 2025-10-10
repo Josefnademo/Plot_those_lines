@@ -1,4 +1,6 @@
-﻿using ScottPlot;
+﻿using OpenTK.Graphics.ES10;
+using ScottPlot;
+using ScottPlot.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,17 +13,22 @@ namespace PTL_Crypto
 {
     public partial class Form1 : Form
     {
-        // Instancies
-        private readonly ApiClient _apiClient = new ApiClient();
-        private readonly PlotManager _plotManager = new PlotManager();
-        private readonly FileClient _fileClient = new FileClient();
+        // --- Instances of helper classes ---
+        private readonly ApiClient _apiClient = new ApiClient();        // For API requests
+        private readonly PlotManager _plotManager = new PlotManager();  // For plotting crypto graphs
+        private readonly FileClient _fileClient = new FileClient();     // For reading JSON files
+
+        // --- Data collections ---
+        // ! HashSet(This is a collection of unique elements.) is simpler because we only need contains/not contains, without extra bools(as in Dictionary).
+        private readonly Dictionary<string, List<CryptoPrice>> loadedCryptos = new(); // All loaded crypto price data
+        private readonly HashSet<string> visibleCryptos = new();                      // Currently visible cryptos on the chart
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        // Downloading a list of coins from CoinGecko OR Local files in case of error with API
+        // --- On Form Load: load the list of available coins (from API or local fallback) ---
         private async void Form1_Load(object sender, EventArgs e)
         {
             List<CoinInfo> coins;
@@ -32,7 +39,7 @@ namespace PTL_Crypto
             }
             catch
             {
-                // If Api isn't avalabel - loading local files
+                // If Api isn't available  - loading local files
                 coins = new List<CoinInfo>
                 {
                       new CoinInfo { Id = "btc", Name = "Bitcoin", Symbol = "BTC" },
@@ -42,7 +49,7 @@ namespace PTL_Crypto
                 };
             }
 
-            // filter just in case
+            // --- Filter invalid entries using LINQ ---
             coins = coins.Where(c => !string.IsNullOrWhiteSpace(c.Id) &&
                                      !string.IsNullOrWhiteSpace(c.Symbol) &&
                                      !string.IsNullOrWhiteSpace(c.Name))
@@ -59,16 +66,18 @@ namespace PTL_Crypto
             comboBoxCoins.DisplayMember = "Name"; // what to show
             comboBoxCoins.ValueMember = "Id";     // Id for API
 
-            // Autocompletion
+            // --- Enable autocompletion for better UX ---
             comboBoxCoins.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxCoins.AutoCompleteSource = AutoCompleteSource.ListItems;
 
+            // Load a default graph on startup
             await LoadDefaultGraph();
         }
 
-        // Method for loading a chart for a selected coin
+        // Method for loading a chart for a selected coin (Loads local JSON files)
         private async Task LoadDefaultGraph()
         {
+            // Define the base folder containing local data
             string basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data"));
             var allPrices = new Dictionary<string, List<CryptoPrice>>();
 
@@ -98,15 +107,147 @@ namespace PTL_Crypto
                 }
             }
 
-            if (allPrices.Count > 0)
+            if (allPrices.Any())
                 _plotManager.PlotData(formsPlot1, allPrices);
             else
                 MessageBox.Show("There are no local files available to plot the graph");
         }
 
 
+        // ---  Main universal method — loads or add crypto data from API, local or import file.
+        private async Task LoadOrAddCrypto(string coinId, string coinName, string coinSymbol, int days = 7, string importFile = null)
+        {
+            List<CryptoPrice> prices;
 
+            // 1️ Try load from import
+            if (importFile != null)
+            {
+                prices = _fileClient.LoadPricesFromFile(importFile);
+            }
+            else
+            {
+                // 2️ Try API
+                try
+                {
+                    prices = await _apiClient.GetCryptoPricesAsync(coinId, days);
+                }
+                catch
+                {
+                    // 3️Fallback to local JSON
+                    string basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data"));
+                    string fileName = coinId switch
+                    {
+                        "btc" => "btc_7days.json",
+                        "eth" => "eth_7days.json",
+                        "sol" => "solana_7days.json",
+                        "pepe" => "pepe_7days.json",
+                        _ => null
+                    };
+
+                    prices = fileName != null
+                        ? _fileClient.LoadPricesFromFile(Path.Combine(basePath, fileName))
+                        : new List<CryptoPrice>();
+                }
+            }
+
+            if (prices.Count == 0)
+            {
+                MessageBox.Show($"No data found for {coinName} ({coinSymbol})");
+                return;
+            }
+
+            string key = coinSymbol.ToUpper();
+
+            // Save and mark as visible
+            loadedCryptos[key] = prices;
+            visibleCryptos.Add(key);
+
+            // Update CheckedListBox
+            if (!checkedListBoxCryptos1.Items.Contains(key))
+                checkedListBoxCryptos1.Items.Add(key, true);
+
+            // Update chart
+            UpdatePlot();
+        }
+
+        // --- Method for updating a graph based on visibility ---
+        private void UpdatePlot()
+        {
+            // We only take those cryptos that are in visibleCryptos
+            var toPlot = loadedCryptos
+                .Where(kvp => visibleCryptos.Contains(kvp.Key))  // filter by HashSet
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value); // putting it back into the Dictionary
+
+            formsPlot1.Plot.Clear();
+
+            if (toPlot.Any())
+                _plotManager.PlotData(formsPlot1, toPlot);
+
+            formsPlot1.Refresh();
+        }
+
+        // Controlling visibility (CheckedListBox or buttons)
+        private void checkedListBoxCryptos_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            string symbol = checkedListBoxCryptos1.Items[e.Index].ToString();
+
+            // Update visibility according to the new state
+            if (e.NewValue == CheckState.Checked)
+                visibleCryptos.Add(symbol);
+            else
+                visibleCryptos.Remove(symbol);
+
+            // Delay update until checkbox state actually changes
+            BeginInvoke((MethodInvoker)UpdatePlot);
+        }
+
+        // --- Import custom JSON file (.json only) ---
         private void button1_Click(object sender, EventArgs e)
+        {
+            using OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "JSON files (*.json)|*.json";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string path = ofd.FileName;
+                string name = Path.GetFileNameWithoutExtension(path);
+                string symbol = name.Substring(0, Math.Min(4, name.Length)).ToUpper();
+                _ = LoadOrAddCrypto(symbol.ToLower(), name, symbol, importFile: path);
+            }
+        }
+
+        // Load crypto from ComboBox for 1/7/30/365 days
+        private async Task LoadCryptoData(int days)
+        {
+            if (comboBoxCoins.SelectedItem is not CoinInfo selectedCoin)
+            {
+                MessageBox.Show("Sélectionnez une crypto monnaie");
+                return;
+            }
+            await LoadOrAddCrypto(selectedCoin.Id, selectedCoin.Name, selectedCoin.Symbol, days);
+        }
+
+        private async void button5_Click(object sender, EventArgs e) // 1 day button
+        { await LoadCryptoData(1); }
+
+        private async void button2_Click(object sender, EventArgs e) // 7 day button
+        { await LoadCryptoData(7); }
+
+        private async void button3_Click(object sender, EventArgs e) // 30 day button
+        { await LoadCryptoData(30); }
+
+        private async void button4_Click(object sender, EventArgs e) // 365 day button
+        { await LoadCryptoData(365); }
+
+        // --- When user selects another crypto in the ComboBox ---
+        private async void comboBoxCoins_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxCoins.SelectedItem is CoinInfo coin)
+                await LoadOrAddCrypto(coin.Id, coin.Name, coin.Symbol, 7); // default 7 days
+            else
+                MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -114,71 +255,6 @@ namespace PTL_Crypto
         private void formsPlot1_Load(object sender, EventArgs e)
         {
 
-        }
-
-        // Load crypto data and plot chart using combobox and buttons
-        private async Task LoadCryptoData(int days)
-        {
-
-            // Get coin name from search bar of combobox
-            if (comboBoxCoins.SelectedItem is not CoinInfo selectedCoin)
-            {
-                MessageBox.Show("Sélectionnez une crypto monnaie");
-                return;
-            }
-
-            string coin = selectedCoin.Id.ToLower();
-
-            try
-            {
-                // Fetch prices from API
-                var prices = await _apiClient.GetCryptoPricesAsync(coin, days);
-
-                // Put data in Dictionary
-                var allPrices = new Dictionary<string, List<CryptoPrice>>
-                 {
-                   { coin.ToUpper(), prices }
-                 };
-
-                // Plot data on the chart using PlotManager
-                _plotManager.PlotData(formsPlot1, allPrices);
-            }
-            catch
-            {
-                MessageBox.Show("Impossible de récupérer les données depuis l'API.");
-            }
-        }
-        private async void button5_Click(object sender, EventArgs e) // 1 day button
-        {
-            await LoadCryptoData(1);
-        }
-
-        private async void button2_Click(object sender, EventArgs e) // 7 day button
-        {
-            await LoadCryptoData(7);
-        }
-
-        private async void button3_Click(object sender, EventArgs e) // 30 day button
-        {
-            await LoadCryptoData(30);
-        }
-
-        private async void button4_Click(object sender, EventArgs e) // 365 day button
-        {
-            await LoadCryptoData(365);
-        }
-
-
-        private async void comboBoxCoins_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxCoins.SelectedItem is CoinInfo selectedCoin)
-            {
-                    // loading 7 days of data bydefault
-                    await LoadCryptoData(7);
-            }
-            else {
-                MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
-            }
         }
     }
 }

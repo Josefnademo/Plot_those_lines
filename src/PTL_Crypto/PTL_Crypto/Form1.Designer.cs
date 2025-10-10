@@ -36,13 +36,14 @@
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
             button5 = new Button();
             comboBoxCoins = new ComboBox();
+            checkedListBoxCryptos1 = new CheckedListBox();
             SuspendLayout();
             // 
             // button1
             // 
             button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
             button1.FlatAppearance.BorderSize = 0;
-            button1.Location = new Point(626, 680);
+            button1.Location = new Point(516, 667);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(357, 96);
@@ -52,7 +53,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(185, 93);
+            button2.Location = new Point(76, 80);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
             button2.Size = new Size(46, 33);
@@ -63,7 +64,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(238, 93);
+            button3.Location = new Point(129, 80);
             button3.Margin = new Padding(3, 4, 3, 4);
             button3.Name = "button3";
             button3.Size = new Size(46, 33);
@@ -74,7 +75,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(290, 93);
+            button4.Location = new Point(181, 80);
             button4.Margin = new Padding(3, 4, 3, 4);
             button4.Name = "button4";
             button4.Size = new Size(46, 33);
@@ -86,7 +87,7 @@
             // formsPlot1
             // 
             formsPlot1.DisplayScale = 1F;
-            formsPlot1.Location = new Point(131, 135);
+            formsPlot1.Location = new Point(22, 122);
             formsPlot1.Margin = new Padding(3, 4, 3, 4);
             formsPlot1.Name = "formsPlot1";
             formsPlot1.Size = new Size(851, 517);
@@ -95,7 +96,7 @@
             // 
             // button5
             // 
-            button5.Location = new Point(133, 93);
+            button5.Location = new Point(24, 80);
             button5.Margin = new Padding(3, 4, 3, 4);
             button5.Name = "button5";
             button5.Size = new Size(46, 33);
@@ -107,12 +108,26 @@
             // comboBoxCoins
             // 
             comboBoxCoins.FormattingEnabled = true;
-            comboBoxCoins.Location = new Point(649, 93);
+            comboBoxCoins.Location = new Point(540, 80);
             comboBoxCoins.Margin = new Padding(3, 4, 3, 4);
             comboBoxCoins.Name = "comboBoxCoins";
             comboBoxCoins.Size = new Size(333, 28);
             comboBoxCoins.TabIndex = 7;
             comboBoxCoins.SelectedIndexChanged += comboBoxCoins_SelectedIndexChanged;
+            // 
+            // checkedListBoxCryptos1
+            // 
+            checkedListBoxCryptos1.BackColor = Color.AliceBlue;
+            checkedListBoxCryptos1.CheckOnClick = true;
+            checkedListBoxCryptos1.Font = new Font("Roboto", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            checkedListBoxCryptos1.ForeColor = SystemColors.WindowText;
+            checkedListBoxCryptos1.FormattingEnabled = true;
+            checkedListBoxCryptos1.Location = new Point(879, 123);
+            checkedListBoxCryptos1.Name = "checkedListBoxCryptos1";
+            checkedListBoxCryptos1.Size = new Size(223, 508);
+            checkedListBoxCryptos1.Sorted = true;
+            checkedListBoxCryptos1.TabIndex = 8;
+            checkedListBoxCryptos1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
             // 
             // Form1
             // 
@@ -122,6 +137,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1114, 865);
+            Controls.Add(checkedListBoxCryptos1);
             Controls.Add(comboBoxCoins);
             Controls.Add(button5);
             Controls.Add(formsPlot1);
@@ -146,5 +162,6 @@
         private ScottPlot.WinForms.FormsPlot formsPlot1;
         private Button button5;
         private ComboBox comboBoxCoins;
+        public CheckedListBox checkedListBoxCryptos1;
     }
 }
