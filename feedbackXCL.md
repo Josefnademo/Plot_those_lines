@@ -30,3 +30,10 @@
 - Concentrez-vous sur cette story, qui n'a pas besoin de l'API puisqu'elle se base sur les données stockées
 - Formulez une vraie user story qui concerne l'API. Selon mon interprétation de ce que vous avez écrit, cela pourrait être quelquechose du genre: quand on démarre l'app, on a un message qu'on va chercher des données récentes sur CoinGecko. Quand on les a récupérées, un message annonce la disponibilté de nouvelles données (ou signale une erreur)
 - Votre gitignore est un peu juste. Il n'exclut pas les fichiers temporaires de contexte de visual studio (contenu du dossier `.vs`). Procédez à un [refresh](https://sigalambigha.home.blog/2020/03/11/how-to-refresh-gitignore/) svp
+
+## 9.10
+
+- Le point concernant le `.gitignore` ci-dessus doit toujours être corrigé
+- jdt: très bien
+- Mettez une maquette dans la US "Bouton d'importation"
+- Le rapport doit être étoffé, mais il est plutôt bien parti
