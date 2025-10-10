@@ -14,7 +14,7 @@ namespace PTL_Crypto
     public class FileClient
     {
         // Reads JSON from a local file and converts into a list of CryptoPrice objects
-        public List<CryptoPrice> LoadPricesFromFile(string filePath, TextBox textBoxRawData = null)
+        public List<CryptoPrice> LoadPricesFromFile(string filePath, TextBox textBoxRawData = null) //i left prameters as optional so it will also work  with or without Textbox
         {
             // Read JSON text from the file
             string json = File.ReadAllText(filePath);

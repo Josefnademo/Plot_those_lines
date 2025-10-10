@@ -14,16 +14,33 @@ namespace PTL_Crypto
         // Instancies
         private readonly ApiClient _apiClient = new ApiClient();
         private readonly PlotManager _plotManager = new PlotManager();
+        private readonly FileClient _fileClient = new FileClient();
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        // Downloading a list of coins from CoinGecko OR Local files in case of error with API
         private async void Form1_Load(object sender, EventArgs e)
         {
-            // Downloading a list of coins from CoinGecko
-            var coins = await _apiClient.GetCoinsListAsync();
+            List<CoinInfo> coins;
+            try
+            {
+                // Try via API
+                coins = await _apiClient.GetCoinsListAsync();
+            }
+            catch
+            {
+                // If Api isn't avalabel - loading local files
+                coins = new List<CoinInfo>
+                {
+                      new CoinInfo { Id = "btc", Name = "Bitcoin", Symbol = "BTC" },
+                      new CoinInfo { Id = "eth", Name = "Ethereum", Symbol = "ETH" },
+                      new CoinInfo { Id = "sol", Name = "Solana", Symbol = "SOL" },
+                      new CoinInfo { Id = "pepe", Name = "PepeCoin", Symbol = "PEPE" }
+                };
+            }
 
             // filter just in case
             coins = coins.Where(c => !string.IsNullOrWhiteSpace(c.Id) &&
@@ -46,7 +63,48 @@ namespace PTL_Crypto
             comboBoxCoins.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxCoins.AutoCompleteSource = AutoCompleteSource.ListItems;
 
+            await LoadDefaultGraph();
         }
+
+        // Method for loading a chart for a selected coin
+        private async Task LoadDefaultGraph()
+        {
+            string basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data"));
+            var allPrices = new Dictionary<string, List<CryptoPrice>>();
+
+            foreach (var coin in comboBoxCoins.DataSource as List<CoinInfo>)
+            {
+                string fileName = coin.Id switch
+                {
+                    "btc" => "btc_7days.json",
+                    "eth" => "eth_7days.json",
+                    "sol" => "solana_7days.json",
+                    "pepe" => "pepe_7days.json",
+                    _ => null
+                };
+
+                if (fileName != null)
+                {
+                    string path = Path.Combine(basePath, fileName);
+
+                    if (!File.Exists(path))
+                    {
+                        MessageBox.Show($"File {fileName} not found in {basePath}");
+                        continue;
+                    }
+
+                    var prices = _fileClient.LoadPricesFromFile(path);
+                    allPrices.Add(coin.Symbol, prices);
+                }
+            }
+
+            if (allPrices.Count > 0)
+                _plotManager.PlotData(formsPlot1, allPrices);
+            else
+                MessageBox.Show("There are no local files available to plot the graph");
+        }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -58,18 +116,18 @@ namespace PTL_Crypto
 
         }
 
-        // Load crypto data and plot chart using textbox and buttons
+        // Load crypto data and plot chart using combobox and buttons
         private async Task LoadCryptoData(int days)
         {
 
-            // Get coin name from search bar
-            string coin = textBoxCoin.Text.Trim().ToLower();
-
-            if (string.IsNullOrEmpty(coin))
+            // Get coin name from search bar of combobox
+            if (comboBoxCoins.SelectedItem is not CoinInfo selectedCoin)
             {
-                MessageBox.Show("Entre un nom d'une crypto monnaie");
+                MessageBox.Show("Sélectionnez une crypto monnaie");
                 return;
             }
+
+            string coin = selectedCoin.Id.ToLower();
 
             try
             {
@@ -110,26 +168,16 @@ namespace PTL_Crypto
             await LoadCryptoData(365);
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private async void comboBoxCoins_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxCoins.SelectedItem is CoinInfo selectedCoin)
             {
-                try
-                {
-                    // when a person selects from the ComboBox → fill the TextBox
-                    textBoxCoin.Text = selectedCoin.Id;
                     // loading 7 days of data bydefault
                     await LoadCryptoData(7);
-                }
-                catch
-                {
-                    MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
-                }
+            }
+            else {
+                MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
             }
         }
     }
