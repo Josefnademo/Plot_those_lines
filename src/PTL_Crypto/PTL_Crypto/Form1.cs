@@ -173,12 +173,12 @@ namespace PTL_Crypto
         // --- Method for updating a graph based on visibility ---
         private void UpdatePlot()
         {
+            formsPlot1.Plot.Clear();
+
             // We only take those cryptos that are in visibleCryptos
             var toPlot = loadedCryptos
                 .Where(kvp => visibleCryptos.Contains(kvp.Key))  // filter by HashSet
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value); // putting it back into the Dictionary
-
-            formsPlot1.Plot.Clear();
 
             if (toPlot.Any())
                 _plotManager.PlotData(formsPlot1, toPlot);
@@ -198,7 +198,7 @@ namespace PTL_Crypto
                 visibleCryptos.Remove(symbol);
 
             // Delay update until checkbox state actually changes
-            BeginInvoke((MethodInvoker)UpdatePlot);
+            UpdatePlot();
         }
 
         // --- Import custom JSON file (.json only) ---

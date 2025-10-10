@@ -74,3 +74,6 @@ x86/
 # Rider / JetBrains
 .idea/
 *.sln.iml
+
+# Explicitly ignore the problematic backup file
+src/PTL_Crypto/.vs/PTL_Crypto/v17/DocumentLayout.backup.json

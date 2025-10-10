@@ -43,7 +43,7 @@
             // 
             button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
             button1.FlatAppearance.BorderSize = 0;
-            button1.Location = new Point(516, 667);
+            button1.Location = new Point(745, 671);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(357, 96);
@@ -127,7 +127,7 @@
             checkedListBoxCryptos1.Size = new Size(223, 508);
             checkedListBoxCryptos1.Sorted = true;
             checkedListBoxCryptos1.TabIndex = 8;
-            checkedListBoxCryptos1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
+            checkedListBoxCryptos1.ItemCheck += checkedListBoxCryptos_ItemCheck;
             // 
             // Form1
             // 
