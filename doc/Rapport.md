@@ -16,7 +16,9 @@ J’ai appliqué plusieurs notions clés du cours :
 - la gestion de projet avec GitHub (projets, commits, versioning) ;
 - la production d’une documentation professionnelle (Rapport, JDT, README).
 
-L’objectif pédagogique est donc double : d’un côté apprendre à développer une application concrète avec un client, et de l’autre acquérir des bonnes pratiques professionnelles en termes de planification, organisation et communication technique.
+L’objectif pédagogique est donc double : d’un côté, apprendre à développer une application concrète avec un client, et de l’autre, acquérir des bonnes pratiques professionnelles en termes de planification, organisation et communication technique.
+
+Enfin, ce projet me permet de développer des compétences transversales comme l’autonomie dans la résolution de problèmes, la structuration de code maintenable et la documentation claire des processus de développement. J’ai également appris à planifier des tests basés sur des User Stories et à corriger des erreurs détectées lors des tests unitaires, ce qui renforce mon approche méthodique et rigoureuse.
 
 ### 1.2 Objectifs produit
 
@@ -91,6 +93,8 @@ Consulter le fichier séparé [Planification.md](https://github.com/Josefnademo/
 
 - Classes :
 
+  - FileClient (lis fichier JSON)
+  - CoinInfo ("Coin" information et Override lui à ToString)
   - CryptoPrice (modèle de données).
   - ApiClient (récupération JSON).
   - PlotManager (gestion graphique).
@@ -179,21 +183,94 @@ _Il contient les tâches réalisées à chaque séance, la durée et un commenta
 - Assistance technique pour LINQ et Windows Forms(un des source d'information théorique).
 
 Toutes les suggestions ont été vérifiées, adaptées et comprises avant intégration.
+IA a servi à structurer le contenu, corriger les fautes d'orthographe et vérifier la cohérence des User Stories, donc les fautes d'orthographe des stories.
 
-## 8. Conclusion
+## 8. bilan technique
 
-J’ai appris à :
+Le bilan technique permet de faire le point sur les choix technologiques, les méthodes de développement et l’efficacité du code dans le projet Plot Those Lines! (Crypto Edition).
 
+### 8.1 Choix technologiques
+
+- Langage et framework : C# avec Windows Forms
+
+  - Avantage : simplicité pour créer une interface graphique rapide et intégration facile avec ScottPlot.
+
+- Bibliothèques et outils :
+
+  - ScottPlot pour les graphiques financiers.
+  - System.Text.Json pour la désérialisation JSON.
+
+- API externe : CoinGecko
+
+  - Fournit des données fiables et à jour sur les cryptomonnaies.
+
+- Gestion des données : LINQ pour filtrer, transformer et manipuler les collections.
+  - Avantage : remplace les boucles for et foreach, offrant un code plus lisible et maintenable.
+
+### 8.2 Architecture et organisation du code
+
+- Classes principales :
+
+  - FileClient : lecture de fichiers JSON locaux et conversion en objets CryptoPrice.
+  - ApiClient : récupération des données depuis CoinGecko.
+  - CryptoPrice : modèle de données représentant le prix d’une crypto à un instant donné.
+  - CoinInfo : informations de base sur une crypto (Id, Nom, Symbole).
+  - PlotManager : gestion des graphiques et affichage sur ScottPlot.
+
+- Méthodologie LINQ :
+
+  - Filtrage des données (périodes 7, 30, 90 jours).
+  - Transformation des données JSON en séries temporelles.
+  - Sélection des cryptos visibles dans le graphique.
+  - Réduction des boucles classiques pour un code plus concis et fonctionnel.
+
+### 8.3 Gestion des erreurs et robustesse
+
+- Prévoir des fallbacks : si l’API n’est pas disponible, les fichiers JSON locaux sont utilisés.
+- Validation des données avant affichage : les données vides ou incorrectes déclenchent des messages utilisateurs.
+- Gestion des exceptions dans tous les appels API et fichiers locaux.
+
+### 8.4 Tests et validation
+
+- Unitaires : vérification de la désérialisation, de la conversion timestamp → DateTime, du filtrage LINQ, et de la cohérence des séries pour ScottPlot.
+- D’acceptation : validation des interactions utilisateur (sélection crypto, période, visibilité sur le graphique).
+
+### 8.5 Performances et maintenabilité
+
+- Utilisation de HashSet pour la gestion des cryptos visibles → accès rapide et filtrage efficace.
+- LINQ pour manipuler les collections → code plus lisible, moins d’erreurs liées aux boucles.
+- Modularité des classes → facile à maintenir et à étendre (ajout d’une nouvelle crypto ou source de données).
+
+### 8.6 Difficultés techniques rencontrées
+
+- Conversion correcte des timestamps Unix en DateTime pour l’affichage chronologique.
+- Gestion des fichiers JSON importés par l’utilisateur et des séries multiples dans ScottPlot.
+- Passage complet des boucles classiques à LINQ pour toutes les opérations sur les collections.
+
+## 9. bilan personnel
+
+Ce projet m’a permis de :
+
+- Développer une application complète de visualisation de données.
 - Travailler avec une API externe (CoinGecko) et traitement de données JSON.
-- Manipuler des données JSON avec LINQ.
+- Maîtriser LINQ et WinForms pour des traitements de données complexes.
+- Mettre en pratique les tests unitaires et d’acceptation, renforçant ma rigueur.
 - Générer et afficher des séries temporelles avec ScottPlot.
 - Implémentation de tests unitaires et tests d’acceptation réels.
 
-Ce projet m’a permis de lier théorie et pratique, en réalisant un outil concret d’analyse visuelle des cryptomonnaies.
+Les principales difficultés ont été :
 
-L’application Plot Those Lines! (Crypto Edition) constitue une solution complète, claire et évolutive pour visualiser les tendances des cryptomonnaies de manière intuitive et fiable.
+- Comprendre et appliquer LINQ pour filtrage et transformation des séries.
+- Synchroniser les User Stories avec les tests d’acceptation et issues GitHub.
 
-## 9. Références
+Grâce à la planification et à l’usage de JDT, j’ai pu résoudre ces difficultés progressivement. Ce projet a renforcé mes compétences en programmation et en gestion de projet, tout en améliorant ma capacité à documenter et présenter un projet de manière professionnelle.
+
+## 10. Conclusion
+
+L’application Plot Those Lines! (Crypto Edition) est complète, intuitive et fiable.
+J’ai pu lier théorie et pratique, produire une documentation structurée et assurer la traçabilité entre User Stories, tests et issues GitHub.
+
+## 11. Références
 
 - CoinGecko API: https://www.coingecko.com/en/api
 - Exemple d’interface: https://www.investing.com/charts/live-charts

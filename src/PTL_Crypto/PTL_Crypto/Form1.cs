@@ -77,41 +77,42 @@ namespace PTL_Crypto
         // Method for loading a chart for a selected coin (Loads local JSON files)
         private async Task LoadDefaultGraph()
         {
-            // Define the base folder containing local data
-            string basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data"));
-            var allPrices = new Dictionary<string, List<CryptoPrice>>();
+            string basePath = Path.GetFullPath(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data")
+            );
 
-            foreach (var coin in comboBoxCoins.DataSource as List<CoinInfo>)
-            {
-                string fileName = coin.Id switch
+            var allPrices =
+                (comboBoxCoins.DataSource as List<CoinInfo>)
+                .Select(coin => new
                 {
-                    "btc" => "btc_7days.json",
-                    "eth" => "eth_7days.json",
-                    "sol" => "solana_7days.json",
-                    "pepe" => "pepe_7days.json",
-                    _ => null
-                };
-
-                if (fileName != null)
-                {
-                    string path = Path.Combine(basePath, fileName);
-
-                    if (!File.Exists(path))
+                    Coin = coin,
+                    FileName = coin.Id switch
                     {
-                        MessageBox.Show($"File {fileName} not found in {basePath}");
-                        continue;
+                        "btc" => "btc_7days.json",
+                        "eth" => "eth_7days.json",
+                        "sol" => "solana_7days.json",
+                        "pepe" => "pepe_7days.json",
+                        _ => null
                     }
-
-                    var prices = _fileClient.LoadPricesFromFile(path);
-                    allPrices.Add(coin.Symbol, prices);
-                }
-            }
+                })
+                .Where(x => x.FileName != null)
+                .Select(x => new
+                {
+                    x.Coin,
+                    Path = Path.Combine(basePath, x.FileName)
+                })
+                .Where(x => File.Exists(x.Path))
+                .ToDictionary(
+                    x => x.Coin.Symbol,
+                    x => _fileClient.LoadPricesFromFile(x.Path)
+                );
 
             if (allPrices.Any())
                 _plotManager.PlotData(formsPlot1, allPrices);
             else
                 MessageBox.Show("There are no local files available to plot the graph");
         }
+
 
 
         // ---  Main universal method — loads or add crypto data from API, local or import file.
