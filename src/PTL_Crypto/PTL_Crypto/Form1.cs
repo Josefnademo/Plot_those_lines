@@ -114,7 +114,6 @@ namespace PTL_Crypto
         }
 
 
-
         // ---  Main universal method — loads or add crypto data from API, local or import file.
         private async Task LoadOrAddCrypto(string coinId, string coinName, string coinSymbol, int days = 7, string importFile = null)
         {
