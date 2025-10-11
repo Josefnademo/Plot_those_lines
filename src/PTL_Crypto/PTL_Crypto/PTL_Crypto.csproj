@@ -9,6 +9,56 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="local_data\btc_1day.json" />
+    <None Remove="local_data\btc_1y.json" />
+    <None Remove="local_data\btc_30days.json" />
+    <None Remove="local_data\btc_7days.json" />
+    <None Remove="local_data\eth_1y.json" />
+    <None Remove="local_data\eth_30days.json" />
+    <None Remove="local_data\eth_7days.json" />
+    <None Remove="local_data\pepe_1day.json" />
+    <None Remove="local_data\pepe_7days.json" />
+    <None Remove="local_data\solana_1day.json" />
+    <None Remove="local_data\solana_7days.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="local_data\btc_1day.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\btc_1y.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\btc_30days.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\btc_7days.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\eth_1y.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\eth_30days.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\eth_7days.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\pepe_1day.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\pepe_7days.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\solana_1day.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="local_data\solana_7days.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="ScottPlot" Version="5.0.56" />
     <PackageReference Include="ScottPlot.WinForms" Version="5.0.56" />
