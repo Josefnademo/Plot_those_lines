@@ -77,9 +77,7 @@ namespace PTL_Crypto
         // Method for loading a chart for a selected coin (Loads local JSON files)
         private async Task LoadDefaultGraph()
         {
-            string basePath = Path.GetFullPath(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data")
-            );
+            string basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data");
 
             var allPrices =
                 (comboBoxCoins.DataSource as List<CoinInfo>)
@@ -134,7 +132,7 @@ namespace PTL_Crypto
                 catch
                 {
                     // 3️Fallback to local JSON
-                    string basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\local_data"));
+                    string basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data");
                     string fileName = coinId switch
                     {
                         "btc" => "btc_7days.json",
