@@ -77,6 +77,166 @@ J’ai planifié le projet sur **8 semaines** pour un total de 24 à 32 période
 
 Consulter le fichier séparé [Planification.md](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Planification.md)
 
+### 3.3 Expression des besoins (User Stories)
+
+Cette section présente les principales **User Stories** du projet **Plot Those Lines (Crypto Edition)**.  
+Elles ont été rédigées selon la méthode « _En tant que… je veux… afin de…_ », accompagnées de leurs **critères d’acceptation [TA]**.
+
+---
+
+#### 1. Prototype API
+
+**En tant que développeur**, je veux que l’application récupère des données JSON depuis **CoinGecko** pour une cryptomonnaie donnée, afin de vérifier la connexion et les données reçues.
+
+**[TA] Critères d’acceptation :**
+
+- Quand je lance la récupération, un appel HTTP est effectué via `HttpClient`.
+- Si l’appel réussit, le JSON brut s’affiche dans une `TextBox` ou la console.
+- Si l’appel échoue (erreur réseau ou crypto inconnue), un `MessageBox` d’erreur s’affiche et je reste sur la même interface.
+
+**En tant qu’utilisateur**, je veux voir les données de prix d’une cryptomonnaie affichées dans l’application, afin de vérifier qu’elles proviennent bien de la source officielle.
+
+**[TA] Critères d’acceptation :**
+
+- Quand je choisis une crypto (ex. Bitcoin) et que je lance la recherche, les données apparaissent dans l’application.
+- Si la crypto existe, je vois les valeurs correctes.
+- Si la crypto est inconnue ou la connexion échoue, un message clair m’informe du problème.
+
+---
+
+#### 2. Parsing JSON + LINQ
+
+**En tant que développeur**, je veux parser le JSON et le transformer en objets `CryptoPrice` à l’aide de **LINQ**, afin de préparer les données à l’affichage graphique.
+
+**[TA] Critères d’acceptation :**
+
+- Le timestamp du JSON est correctement converti en `DateTime`.
+- LINQ est utilisé pour transformer et filtrer les données.
+- Des tests unitaires vérifient la cohérence des objets `CryptoPrice`.
+
+**En tant qu’utilisateur**, je veux que les données du graphique soient cohérentes dans le temps.
+
+**[TA] Critères d’acceptation :**
+
+- Les dates sont correctes sur l’axe temporel.
+- Les valeurs affichées correspondent à celles de l’API.
+- Si les données sont invalides, un message clair apparaît.
+
+---
+
+#### 3. Premier graphique
+
+**En tant qu’utilisateur**, je veux voir un graphique **ScottPlot** des prix d’une cryptomonnaie sur une période donnée, afin de visualiser son évolution.
+
+**[TA] Critères d’acceptation :**
+
+- Au démarrage, un graphique est visible (Bitcoin sur 7 jours par défaut).
+- Les axes X et Y sont correctement configurés.
+- Une légende indique la cryptomonnaie correspondante.
+
+---
+
+#### 4. Flexibilité utilisateur
+
+**En tant qu’utilisateur**, je veux choisir la cryptomonnaie et la période d’affichage (7, 30, 90 jours), afin d’adapter l’analyse à mes besoins.
+
+**[TA] Critères d’acceptation :**
+
+- Une `ComboBox` me permet de sélectionner la cryptomonnaie.
+- Une autre `ComboBox` me permet de choisir la période.
+- Le graphique se met à jour automatiquement.
+- Si la crypto est inconnue, un `MessageBox` d’erreur s’affiche.
+
+---
+
+#### 5. Afficher un graphique temporel avec ScottPlot
+
+**En tant qu’utilisateur**, je veux visualiser les données sous forme de graphique temporel interactif, afin de comprendre l’évolution du prix.
+
+**[TA] Critères d’acceptation :**
+
+- L’axe X correspond au temps, Y au prix.
+- Je peux zoomer et déplacer le graphique.
+- La légende indique quelle courbe correspond à quelle crypto.
+
+---
+
+#### 6. Comparer plusieurs cryptomonnaies
+
+**En tant qu’utilisateur**, je veux comparer plusieurs cryptomonnaies sur un même graphique, afin d’analyser leurs performances relatives.
+
+**[TA] Critères d’acceptation :**
+
+- Je peux sélectionner plusieurs cryptos.
+- Chaque crypto a une couleur distincte.
+- Une légende précise à quelle crypto correspond chaque courbe.
+
+---
+
+#### 7. Maquette Figma
+
+**En tant qu’utilisateur**, je veux une maquette interactive dans **Figma** de l’application, afin de visualiser et tester toutes les fonctionnalités avant le développement.
+
+**Fonctionnalités représentées dans la maquette :**
+
+- Graphiques multi-séries temporelles.
+- Zoom, déplacement et filtrage interactifs.
+- Importation de données depuis JSON, CSV ou API.
+- Affichage de plusieurs intervalles pour une même donnée.
+- Menu clair, tooltips et design harmonieux.
+- Tous les composants nécessaires au développement inclus.
+- (Optionnel) Un onglet pour afficher des fonctions mathématiques (`x²`, `sin(x)`, etc.) avec saisie libre.
+
+**[TA] Critères d’acceptation :**
+
+- Navigation fluide entre toutes les fonctionnalités.
+- Chaque fonctionnalité est visuellement annotée.
+- Le design respecte la charte graphique.
+
+---
+
+#### 8. Importer des données JSON depuis CoinGecko
+
+**En tant que développeur**, je veux importer les données de prix depuis l’API **CoinGecko**, afin d’avoir des informations toujours à jour.
+
+**[TA] Critères d’acceptation :**
+
+- Les données sont récupérées automatiquement au lancement.
+- Le JSON est parsé et affiché dans l’interface.
+- En cas d’erreur réseau, un message d’erreur s’affiche.
+
+**En tant qu’utilisateur**, je veux voir des données toujours actualisées pour pouvoir suivre l’évolution des cryptomonnaies.
+
+**[TA] Critères d’acceptation :**
+
+- Au lancement, je vois les prix actuels.
+- Quand je change de crypto, le graphique se met à jour.
+- En cas d’échec, un message clair s’affiche.
+
+---
+
+#### 9. Bouton d’importation de fichier JSON pour les prix de crypto-monnaies
+
+**En tant qu’utilisateur de l’application PTL_Crypto**,  
+je souhaite pouvoir sélectionner un fichier d’une extension correspondante aux données de cryptomonnaies sur mon ordinateur et **importer les données de prix**,  
+afin de visualiser et analyser les prix historiques sans passer par l’API.
+
+**[TA] Critères d’acceptation :**
+
+- L’utilisateur clique sur le bouton **“Importer JSON”**.
+- Une fenêtre de sélection de fichier (`OpenFileDialog`) s’ouvre et permet de choisir un fichier `.json`.
+- Le fichier JSON est lu et les données de prix sont converties en objets `CryptoPrice`.
+- Les données sont affichées dans la `ComboBox` prévue.
+- Les données importées peuvent ensuite être utilisées pour tracer un graphique via `formsPlot1`.
+
+**Tâches techniques :**
+
+- Ajouter un bouton `button1` avec le texte **“Importer JSON”**.
+- Implémenter un `OpenFileDialog` pour la sélection du fichier.
+- Utiliser la méthode `FileClient.LoadPricesFromFile` pour lire et convertir le JSON.
+- Afficher les données dans `textBoxRawData`.
+- Ajouter une gestion des erreurs si le fichier est invalide ou vide.
+
 ## 4. Réalisation
 
 ### 4.1 Choix techniques
