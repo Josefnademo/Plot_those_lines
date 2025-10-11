@@ -40,11 +40,17 @@
 
 ## 10.10 (80%)
 
-- Rythme (avancement du code):
-- Qualité (normes, commentaires):
-- Connaissances professionnelles (LinQ):
+- Rythme (avancement du code): OK
+- Qualité (normes, commentaires): KO
+  - il vous faut renommer les contrôles utilisés. On ne peut pas bien comprendre votre code avec des identificateurs tels que `button1`,`button2`,...
+  - il reste des chemins d'accès vers les fichiers qui sont trop dépendants de votre poste de travail (Form1:137)
+- Connaissances professionnelles (LinQ): OK
 - Processus de travail (jdt, git, git project, release):
-- Expression (user stories, rapport):
-- Ecologie (.gitignore):
-- Attitude groupe:
-- Attitude personnelle:
+  - Release KO, Elle doit être accompagnée du journal de travail et du rapport (voir project handbook)
+  - il y a un problème avec vos issues: le repos contient plein d'issues qui sont sans rapports avec le projet
+  - de plus, il manque toujours les labels "user story" que j'ai demandé il y a quelques semaines.
+  - veiller à bien prendre connaissance du message que j'ai déposé dans le canal P_FUN et que nous avons vu en classe hier
+- Expression (user stories, rapport): KO. Je ne retrouve aucune user Story. Vous avez une bonne base de rapport, mais il doit encore être étoffé.
+- Ecologie (.gitignore): OK
+- Attitude groupe: vous devez faire mieux. Vous étiez absent hier, vous m'avez rien annoncé dans le canal Teams.
+- Attitude personnelle: OK
