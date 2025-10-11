@@ -37,3 +37,14 @@
 - jdt: très bien
 - Mettez une maquette dans la US "Bouton d'importation"
 - Le rapport doit être étoffé, mais il est plutôt bien parti
+
+## 10.10 (80%)
+
+- Rythme (avancement du code):
+- Qualité (normes, commentaires):
+- Connaissances professionnelles (LinQ):
+- Processus de travail (jdt, git, git project, release):
+- Expression (user stories, rapport):
+- Ecologie (.gitignore):
+- Attitude groupe:
+- Attitude personnelle:
