@@ -1,0 +1,8 @@
+# Supprime tous les fichiers suivis du cache Git, sans les effacer du disque
+git rm -r --cached .
+
+# Ré-ajoute tous les fichiers qui ne sont PAS ignorés
+git add .
+
+# Commit les changements
+git commit -m "Fix .gitignore and remove ignored files from tracking"
