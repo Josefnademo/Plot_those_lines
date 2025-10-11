@@ -4,11 +4,15 @@
 
 ### 1.1 Objectifs pédagogiques
 
-Ce projet est conçu pour me permettre de mettre en pratique les compétences acquises dans les modules de programmation. L’accent est mis sur :
+Ce projet est conçu pour me permettre de mettre en pratique les compétences acquises dans les modules de programmation.
+
+J’ai appliqué plusieurs notions clés du cours :
 
 - la programmation orientée objet avec C# ;
 - l’utilisation de LINQ comme approche moderne de traitement des données ;
+- la gestion d’une API externe et la désérialisation JSON ;
 - la mise en œuvre de tests unitaires afin d’assurer la qualité du code ;
+- la création d’une interface utilisateur graphique (WinForms) ;
 - la gestion de projet avec GitHub (projets, commits, versioning) ;
 - la production d’une documentation professionnelle (Rapport, JDT, README).
 
@@ -26,6 +30,8 @@ Le produit attendu est une application Windows Forms qui permet de visualiser de
 Le produit n’est pas seulement une démonstration technique : il doit être utilisable et compréhensible par un utilisateur non technique qui souhaite visualiser facilement l’évolution des cryptomonnaies.
 
 ## 2. Domaine et sources de données
+
+Le projet s’inscrit dans le secteur des cryptomonnaies, un domaine en évolution rapide et riche en données quantitatives.
 
 J’ai choisi le domaine des cryptomonnaies pour plusieurs raisons :
 
@@ -95,18 +101,70 @@ Consulter le fichier séparé [Planification.md](https://github.com/Josefnademo/
 
 ## 5. Tests
 
-- **Tests unitaires**
+### Tests unitaires
 
-- Vérification du parsing correct du JSON depuis CoinGecko API.
-- Vérification de la conversion timestamp → DateTime via les méthodes d’extension.
-- Vérification de la sélection et du filtrage des périodes (7, 30, 90 jours) avec LINQ.
-- Vérification de la transformation des données JSON en séries exploitables par ScottPlot.
+Les tests unitaires ont été conçus pour valider la fiabilité et la cohérence des différentes étapes de traitement des données dans l’application.  
+Chaque test correspond à une partie spécifique du flux logique — de la récupération des données jusqu’à leur affichage sur le graphique.
 
-- **Tests d’acceptation**
+---
 
-- Lancer l’application, saisir "bitcoin" et vérifier l’affichage du graphique pour 30 jours.
-- Comparer Bitcoin + Ethereum et s’assurer que 2 courbes distinctes apparaissent correctement.
-- Saisir un identifiant invalide et vérifier la gestion de l’erreur (MessageBox ou Label).
+- a. **Vérification du parsing du JSON depuis l’API CoinGecko**  
+  **Objectif** : s’assurer que les données téléchargées (format JSON) sont correctement désérialisées en objets `CryptoPrice`.  
+  **Méthode** : test de désérialisation simulée à partir d’un échantillon JSON.  
+  **Résultat attendu** : chaque objet contient un symbole valide, un prix positif et une date correcte.  
+  **Lien avec l’application** : cette étape correspond au chargement initial des données depuis l’API dans la logique principale.
+
+---
+
+- b. **Vérification de la conversion timestamp → DateTime**  
+  **Objectif** : garantir que les timestamps Unix reçus de l’API sont correctement convertis en format `DateTime` lisible par C#.  
+  **Méthode** : utilisation d’une méthode d’extension personnalisée (`FromUnixTimestamp`).  
+  **Résultat attendu** : les dates sont en ordre chronologique croissant et au format UTC.  
+  **Lien avec l’application** : cette conversion est essentielle pour l’affichage temporel correct des prix sur le graphique.
+
+---
+
+- c. **Vérification du filtrage des périodes avec LINQ**  
+  **Objectif** : s’assurer que le filtrage des périodes (7, 30, 90 jours) renvoie les bons intervalles de données.  
+  **Méthode** : application de requêtes LINQ sur les listes d’objets `CryptoPrice` avec filtrage par `DateTime`.  
+  **Résultat attendu** : seules les entrées correspondant à la période sélectionnée sont conservées.  
+  **Lien avec l’application** : cette étape correspond au choix de la période d’affichage du graphique par l’utilisateur.
+
+---
+
+- d. **Vérification de la transformation des données en séries ScottPlot**  
+  **Objectif** : contrôler la correspondance entre les données brutes (JSON) et les séries prêtes à être tracées sur le graphique.  
+  **Méthode** : simulation d’un graphique à partir de listes de valeurs pour les axes X (temps) et Y (prix).  
+  **Résultat attendu** : les points affichés correspondent aux prix réels, dans le bon ordre temporel.  
+  **Lien avec l’application** : cette étape valide la préparation des données avant leur affichage visuel via ScottPlot.
+
+---
+
+- e. **Test de validité et d’ordre temporel des prix**
+
+  **Objectif** : vérifier que chaque objet `CryptoPrice` contient un symbole valide, un prix positif et que les dates sont dans le bon ordre chronologique.
+
+  **Méthode** : création d’une liste de données simulées (`BTC` à différents instants) et utilisation des assertions XUnit pour contrôler :
+
+  - que les symboles ne sont pas vides,
+  - que les prix sont positifs,
+  - que les timestamps ne sont pas dans le futur,
+  - que les dates sont bien ordonnées.
+
+  **Résultat attendu** : toutes les vérifications passent sans erreur, confirmant la cohérence et la validité des données.
+
+  **Lien avec l’application** : ce test garantit que les données manipulées et affichées dans les graphiques sont logiquement correctes, évitant les anomalies comme des prix négatifs ou des dates inversées.
+
+### Tests d’acceptation
+
+Les tests d’acceptation permettent de vérifier que le comportement global de l’application correspond aux attentes de l’utilisateur.
+
+| Cas de test | Description                                      | Résultat attendu                                             | Statut    |
+| ----------- | ------------------------------------------------ | ------------------------------------------------------------ | --------- |
+| 1           | Lancer l’application et rechercher “bitcoin”     | Le graphique Bitcoin s’affiche (30 jours par défaut)         | ✅ Réussi |
+| 2           | Ajouter “Ethereum” et cocher les deux cryptos    | Les deux courbes apparaissent distinctement sur le graphique | ✅ Réussi |
+| 3           | Décocher “Ethereum” dans la liste                | La courbe Ethereum disparaît, seule Bitcoin reste visible    | ✅ Réussi |
+| 4           | Changer la période d’analyse (7 → 30 → 90 jours) | Le graphique se met à jour avec la nouvelle période          | ✅ Réussi |
 
 ## 6. Journal de travail (JDT)
 
@@ -126,11 +184,14 @@ Toutes les suggestions ont été vérifiées, adaptées et comprises avant inté
 
 J’ai appris à :
 
-- Travailler avec une API externe (CoinGecko).
+- Travailler avec une API externe (CoinGecko) et traitement de données JSON.
 - Manipuler des données JSON avec LINQ.
 - Générer et afficher des séries temporelles avec ScottPlot.
+- Implémentation de tests unitaires et tests d’acceptation réels.
 
 Ce projet m’a permis de lier théorie et pratique, en réalisant un outil concret d’analyse visuelle des cryptomonnaies.
+
+L’application Plot Those Lines! (Crypto Edition) constitue une solution complète, claire et évolutive pour visualiser les tendances des cryptomonnaies de manière intuitive et fiable.
 
 ## 9. Références
 
