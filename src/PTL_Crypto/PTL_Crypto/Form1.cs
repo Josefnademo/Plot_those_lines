@@ -161,8 +161,8 @@ namespace PTL_Crypto
             visibleCryptos.Add(key);
 
             // Update CheckedListBox
-            if (!checkedListBoxCryptos1.Items.Contains(key))
-                checkedListBoxCryptos1.Items.Add(key, true);
+            if (!clbCryptos.Items.Contains(key))
+                clbCryptos.Items.Add(key, true);
 
             // Update chart
             UpdatePlot();
@@ -187,7 +187,7 @@ namespace PTL_Crypto
         // Controlling visibility (CheckedListBox or buttons)
         private void checkedListBoxCryptos_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            string symbol = checkedListBoxCryptos1.Items[e.Index].ToString();
+            string symbol = clbCryptos.Items[e.Index].ToString();
 
             // Update visibility according to the new state
             if (e.NewValue == CheckState.Checked)
@@ -200,7 +200,7 @@ namespace PTL_Crypto
         }
 
         // --- Import custom JSON file (.json only) ---
-        private void button1_Click(object sender, EventArgs e)
+        private void btnImportJson_Click(object sender, EventArgs e)
         {
             using OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "JSON files (*.json)|*.json";
@@ -224,16 +224,17 @@ namespace PTL_Crypto
             await LoadOrAddCrypto(selectedCoin.Id, selectedCoin.Name, selectedCoin.Symbol, days);
         }
 
-        private async void button5_Click(object sender, EventArgs e) // 1 day button
+        private async void btn1Day_Click(object sender, EventArgs e) // 1 day button
         { await LoadCryptoData(1); }
 
-        private async void button2_Click(object sender, EventArgs e) // 7 day button
+        private async void btn7Days_Click(object sender, EventArgs e) // 7 day button
         { await LoadCryptoData(7); }
 
-        private async void button3_Click(object sender, EventArgs e) // 30 day button
+        private async void btn30Days_Click(object sender, EventArgs e) // 30 day button
         { await LoadCryptoData(30); }
 
-        private async void button4_Click(object sender, EventArgs e) // 365 day button
+        private async void btn365Day_Click(object sender, EventArgs e)
+        // 365 day button
         { await LoadCryptoData(365); }
 
         // --- When user selects another crypto in the ComboBox ---
@@ -245,7 +246,7 @@ namespace PTL_Crypto
                 MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
         }
 
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void clbCryptos_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

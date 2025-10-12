@@ -29,60 +29,61 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
+            btnImportJson = new Button();
+            btn7Days = new Button();
+            btn30Days = new Button();
+            btn365Day = new Button();
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
-            button5 = new Button();
+            btn1Day = new Button();
             comboBoxCoins = new ComboBox();
-            checkedListBoxCryptos1 = new CheckedListBox();
+            clbCryptos = new CheckedListBox();
             SuspendLayout();
             // 
-            // button1
+            // btnImportJson
             // 
-            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
-            button1.FlatAppearance.BorderSize = 0;
-            button1.Location = new Point(745, 671);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(357, 96);
-            button1.TabIndex = 0;
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnImportJson.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            btnImportJson.FlatAppearance.BorderSize = 0;
+            btnImportJson.Location = new Point(745, 671);
+            btnImportJson.Margin = new Padding(3, 4, 3, 4);
+            btnImportJson.Name = "btnImportJson";
+            btnImportJson.Size = new Size(357, 96);
+            btnImportJson.TabIndex = 0;
+            btnImportJson.UseVisualStyleBackColor = true;
+            btnImportJson.Click += btnImportJson_Click;
             // 
-            // button2
+            // btn7Days
             // 
-            button2.Location = new Point(76, 80);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(46, 33);
-            button2.TabIndex = 1;
-            button2.Text = "7j";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btn7Days.Location = new Point(76, 80);
+            btn7Days.Margin = new Padding(3, 4, 3, 4);
+            btn7Days.Name = "btn7Days";
+            btn7Days.Size = new Size(46, 33);
+            btn7Days.TabIndex = 1;
+            btn7Days.Text = "7j";
+            btn7Days.UseVisualStyleBackColor = true;
+            btn7Days.Click += btn7Days_Click;
             // 
-            // button3
+            // btn30Days
             // 
-            button3.Location = new Point(129, 80);
-            button3.Margin = new Padding(3, 4, 3, 4);
-            button3.Name = "button3";
-            button3.Size = new Size(46, 33);
-            button3.TabIndex = 2;
-            button3.Text = "30j";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            btn30Days.Location = new Point(129, 80);
+            btn30Days.Margin = new Padding(3, 4, 3, 4);
+            btn30Days.Name = "btn30Days";
+            btn30Days.Size = new Size(46, 33);
+            btn30Days.TabIndex = 2;
+            btn30Days.Text = "30j";
+            btn30Days.UseVisualStyleBackColor = true;
+            btn30Days.Click += btn30Days_Click;
             // 
-            // button4
+            // btn365Day
             // 
-            button4.Location = new Point(181, 80);
-            button4.Margin = new Padding(3, 4, 3, 4);
-            button4.Name = "button4";
-            button4.Size = new Size(46, 33);
-            button4.TabIndex = 3;
-            button4.Text = "1a";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            btn365Day.Location = new Point(181, 80);
+            btn365Day.Margin = new Padding(3, 4, 3, 4);
+            btn365Day.Name = "btn365Day";
+            btn365Day.Size = new Size(46, 33);
+            btn365Day.TabIndex = 3;
+            btn365Day.Text = "1a";
+            btn365Day.UseVisualStyleBackColor = true;
+            this.btn365Day.Click += new System.EventHandler(this.btn365Day_Click);
+
             // 
             // formsPlot1
             // 
@@ -94,16 +95,16 @@
             formsPlot1.TabIndex = 4;
             formsPlot1.Load += formsPlot1_Load;
             // 
-            // button5
+            // btn1Day
             // 
-            button5.Location = new Point(24, 80);
-            button5.Margin = new Padding(3, 4, 3, 4);
-            button5.Name = "button5";
-            button5.Size = new Size(46, 33);
-            button5.TabIndex = 5;
-            button5.Text = "1j";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
+            btn1Day.Location = new Point(24, 80);
+            btn1Day.Margin = new Padding(3, 4, 3, 4);
+            btn1Day.Name = "btn1Day";
+            btn1Day.Size = new Size(46, 33);
+            btn1Day.TabIndex = 5;
+            btn1Day.Text = "1j";
+            btn1Day.UseVisualStyleBackColor = true;
+            btn1Day.Click += btn1Day_Click;
             // 
             // comboBoxCoins
             // 
@@ -115,19 +116,19 @@
             comboBoxCoins.TabIndex = 7;
             comboBoxCoins.SelectedIndexChanged += comboBoxCoins_SelectedIndexChanged;
             // 
-            // checkedListBoxCryptos1
+            // clbCryptos
             // 
-            checkedListBoxCryptos1.BackColor = Color.AliceBlue;
-            checkedListBoxCryptos1.CheckOnClick = true;
-            checkedListBoxCryptos1.Font = new Font("Roboto", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            checkedListBoxCryptos1.ForeColor = SystemColors.WindowText;
-            checkedListBoxCryptos1.FormattingEnabled = true;
-            checkedListBoxCryptos1.Location = new Point(879, 123);
-            checkedListBoxCryptos1.Name = "checkedListBoxCryptos1";
-            checkedListBoxCryptos1.Size = new Size(223, 508);
-            checkedListBoxCryptos1.Sorted = true;
-            checkedListBoxCryptos1.TabIndex = 8;
-            checkedListBoxCryptos1.ItemCheck += checkedListBoxCryptos_ItemCheck;
+            clbCryptos.BackColor = Color.AliceBlue;
+            clbCryptos.CheckOnClick = true;
+            clbCryptos.Font = new Font("Roboto", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            clbCryptos.ForeColor = SystemColors.WindowText;
+            clbCryptos.FormattingEnabled = true;
+            clbCryptos.Location = new Point(879, 123);
+            clbCryptos.Name = "clbCryptos";
+            clbCryptos.Size = new Size(223, 508);
+            clbCryptos.Sorted = true;
+            clbCryptos.TabIndex = 8;
+            clbCryptos.ItemCheck += checkedListBoxCryptos_ItemCheck;
             // 
             // Form1
             // 
@@ -137,14 +138,14 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1114, 865);
-            Controls.Add(checkedListBoxCryptos1);
+            Controls.Add(clbCryptos);
             Controls.Add(comboBoxCoins);
-            Controls.Add(button5);
+            Controls.Add(btn1Day);
             Controls.Add(formsPlot1);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(btn365Day);
+            Controls.Add(btn30Days);
+            Controls.Add(btn7Days);
+            Controls.Add(btnImportJson);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
@@ -155,13 +156,13 @@
 
         #endregion
 
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
+        private Button btnImportJson;
+        private Button btn7Days;
+        private Button btn30Days;
+        private Button btn365Day;
         private ScottPlot.WinForms.FormsPlot formsPlot1;
-        private Button button5;
+        private Button btn1Day;
         private ComboBox comboBoxCoins;
-        public CheckedListBox checkedListBoxCryptos1;
+        public CheckedListBox clbCryptos;
     }
 }
