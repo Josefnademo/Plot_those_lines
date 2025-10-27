@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using static ScottPlot.Generate;
+using System.IO;
+
 
 namespace PTL_Crypto
 {
@@ -26,16 +28,58 @@ namespace PTL_Crypto
         public Form1()
         {
             InitializeComponent();
+            // Important: explicitly attach the FormClosing event
+            this.FormClosing += Form1_FormClosing;
         }
 
-        // --- On Form Load: load the list of available coins (from API or local fallback) ---
+        /// <summary>
+        /// --- On Form Load: load the list of available coins (from API or local fallback) ---
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Form1_Load(object sender, EventArgs e)
         {
+            // Restore previously saved state first 
+            LoadAppState();
+
+
+           /* // Path to state.json for applicatino state monitoring
+            var statePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data", "state.json");
+
+
+            if (File.Exists(statePath))
+            {
+                var json = File.ReadAllText(statePath);
+                var state = JsonSerializer.Deserialize<AppState>(json);
+
+                if (state?.LoadedCryptos != null)
+                {
+                    foreach (var symbol in state.LoadedCryptos)
+                    {
+                        string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data", $"{symbol.ToLower()}_7days.json");
+                        if (File.Exists(filePath))
+                        {
+                            var prices = _fileClient.LoadPricesFromFile(filePath);
+                            loadedCryptos[symbol] = prices;
+                            visibleCryptos.Add(symbol);
+
+                            if (!clbCryptos.Items.Contains(symbol))
+                                clbCryptos.Items.Add(symbol, true);
+                        }
+                    }
+
+                    UpdatePlot();
+                }
+            }*/
+
+
+
             List<CoinInfo> coins;
             try
             {
                 // Try via API
                 coins = await _apiClient.GetCoinsListAsync();
+                await Task.Delay(2000); // Small delay after API call to avoid 429
             }
             catch
             {
@@ -72,9 +116,14 @@ namespace PTL_Crypto
 
             // Load a default graph on startup
             await LoadDefaultGraph();
+
+            // Restore previously saved app state (selected cryptos, visibility, etc.)
+            await LoadAppState();
         }
 
-        // Method for loading a chart for a selected coin (Loads local JSON files)
+        /// <summary>
+        /// Method for loading a chart for a selected coin (Loads local JSON files)
+        /// </summary>
         private async Task LoadDefaultGraph()
         {
             string basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data");
@@ -112,7 +161,16 @@ namespace PTL_Crypto
         }
 
 
-        // ---  Main universal method — loads or add crypto data from API, local or import file.
+
+        /// <summary>
+        /// ---  Main universal method — loads or add crypto data from API, local or import file.
+        /// </summary>
+        /// <param name="coinId"></param>
+        /// <param name="coinName"></param>
+        /// <param name="coinSymbol"></param>
+        /// <param name="days"></param>
+        /// <param name="importFile"></param>
+        /// <returns></returns>
         private async Task LoadOrAddCrypto(string coinId, string coinName, string coinSymbol, int days = 7, string importFile = null)
         {
             List<CryptoPrice> prices;
@@ -126,7 +184,8 @@ namespace PTL_Crypto
             {
                 // 2️ Try API
                 try
-                {
+                { 
+                    await Task.Delay(3000);// Delay 3 sec before the request to reduce 429 errors
                     prices = await _apiClient.GetCryptoPricesAsync(coinId, days);
                 }
                 catch
@@ -168,7 +227,9 @@ namespace PTL_Crypto
             UpdatePlot();
         }
 
-        // --- Method for updating a graph based on visibility ---
+        /// <summary>
+        /// --- Method for updating a graph based on visibility ---
+        /// </summary>
         private void UpdatePlot()
         {
             formsPlot1.Plot.Clear();
@@ -184,7 +245,11 @@ namespace PTL_Crypto
             formsPlot1.Refresh();
         }
 
-        // Controlling visibility (CheckedListBox or buttons)
+        /// <summary>
+        /// Controlling visibility (CheckedListBox or buttons)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkedListBoxCryptos_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             string symbol = clbCryptos.Items[e.Index].ToString();
@@ -199,7 +264,11 @@ namespace PTL_Crypto
             UpdatePlot();
         }
 
-        // --- Import custom JSON file (.json only) ---
+        /// <summary>
+        /// --- Import custom JSON file (.json only) ---
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnImportJson_Click(object sender, EventArgs e)
         {
             using OpenFileDialog ofd = new OpenFileDialog();
@@ -213,7 +282,11 @@ namespace PTL_Crypto
             }
         }
 
-        // Load crypto from ComboBox for 1/7/30/365 days
+        /// <summary>
+        /// Load crypto from ComboBox for 1/7/30/365 days
+        /// </summary>
+        /// <param name="days"></param>
+        /// <returns></returns>
         private async Task LoadCryptoData(int days)
         {
             if (comboBoxCoins.SelectedItem is not CoinInfo selectedCoin)
@@ -237,7 +310,11 @@ namespace PTL_Crypto
         // 365 day button
         { await LoadCryptoData(365); }
 
-        // --- When user selects another crypto in the ComboBox ---
+        /// <summary>
+        /// --- When user selects another crypto in the ComboBox ---
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void comboBoxCoins_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxCoins.SelectedItem is CoinInfo coin)
@@ -255,26 +332,76 @@ namespace PTL_Crypto
         {
 
         }
+
+
+        private readonly string stateFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data", "state.json");
+
+        /// <summary>
+        /// Saves the current application state (loaded and visible cryptos) into a local JSON file.
+        /// </summary>
+        private void SaveAppState()
+        {
+            var state = new AppState
+            {
+                LoadedCryptos = loadedCryptos.Keys.ToList(),
+                VisibleCryptos = visibleCryptos.ToList()
+            };
+
+            // Ensure directory exists before writing
+            Directory.CreateDirectory(Path.GetDirectoryName(stateFilePath)!);
+
+            File.WriteAllText(
+                stateFilePath,
+                JsonSerializer.Serialize(state, new JsonSerializerOptions { WriteIndented = true })
+            );
+        }
+
+        /// <summary>
+        /// Restores the last saved state of the app (visible cryptos and chart data).
+        /// </summary>
+        private async Task LoadAppState()
+        {
+            if (!File.Exists(stateFilePath)) return;
+
+            var state = JsonSerializer.Deserialize<AppState>(File.ReadAllText(stateFilePath));
+            if (state is null) return;
+
+            string basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data");
+
+            var reloaded = state.LoadedCryptos
+                .Select(symbol => new
+                {
+                    Symbol = symbol,
+                    Path = Path.Combine(basePath, $"{symbol.ToLower()}_7days.json")
+                })
+                .Where(x => File.Exists(x.Path))
+                .Select(x => new
+                {
+                    x.Symbol,
+                    Prices = _fileClient.LoadPricesFromFile(x.Path)
+                })
+                .Where(x => x.Prices.Any())
+                .ToDictionary(x => x.Symbol, x => x.Prices);
+
+            reloaded.ToList().ForEach(kvp => loadedCryptos[kvp.Key] = kvp.Value);
+            visibleCryptos.UnionWith(state.VisibleCryptos.Where(v => reloaded.ContainsKey(v)));
+
+            state.VisibleCryptos
+                .Where(symbol => reloaded.ContainsKey(symbol) && !clbCryptos.Items.Contains(symbol))
+                .ToList()
+                .ForEach(symbol => clbCryptos.Items.Add(symbol, true));
+
+            UpdatePlot();
+        }
+
+        /// <summary>
+        /// Triggered when the form is closing (including pressing the "X").
+        /// Ensures app state is saved before exit.
+        /// </summary>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveAppState();
+        }
+
     }
 }
-/*
- test with json local data:
-
-// Create an instance of FileClient to read local JSON files
-            var fileClient = new FileClient();
-
-            // Define the base path where local JSON data files are stored,then enter the "local_data" folder
-            string basePath = Path.Combine(Application.StartupPath, "..", "..", "..", "..", "..", "local_data");
-
-            // Load data for each cryptocurrency from its corresponding JSON file
-            var allPrices = new Dictionary<string, List<CryptoPrice>>
-{
-
-    { "BTC", fileClient.LoadPricesFromFile(Path.Combine(basePath, "btc_1y.json")) },
-    { "ETH", fileClient.LoadPricesFromFile(Path.Combine(basePath, "eth_1y.json")) },
-    { "SOL", fileClient.LoadPricesFromFile(Path.Combine(basePath, "solana_7days.json")) },
-    { "PEPE", fileClient.LoadPricesFromFile(Path.Combine(basePath, "pepe_7days.json")) }
-};
- // Plot data on the chart using PlotManager
-            _plotManager.PlotData(formsPlot1, allPrices);
- */

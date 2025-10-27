@@ -23,6 +23,9 @@ namespace PTL_Crypto
         {
             try
             {
+                // Delay 2 sec before the request to reduce 429 errors
+                await Task.Delay(2000);
+
                 // Build API URL dynamically based on coin and period (days)
                 string url = $"https://api.coingecko.com/api/v3/coins/{coin}/market_chart?vs_currency=usd&days={days}";
                 
@@ -61,6 +64,9 @@ namespace PTL_Crypto
         {
             try
             {
+                // Delay 2 sec before the request to reduce 429 errors
+                await Task.Delay(2000);
+
                 string url = "https://api.coingecko.com/api/v3/coins/list";
                 // http request
                 string json = await _httpClient.GetStringAsync(url);

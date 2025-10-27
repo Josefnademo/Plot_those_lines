@@ -70,20 +70,6 @@ namespace PTL_Crypto
             formsPlot.Refresh();
         }
 
-        /// <summary>
-        /// Restoring charts
-        /// </summary>
-        /// <param name="formsPlot"></param>
-      /* public void RestorePlots(FormsPlot formsPlot)
-        {
-            currentPlots
-                .ToList()                    
-                .ForEach(p => formsPlot.Plot.Add.Scatter(p)); //Add accepts IPlottable directly
-
-            formsPlot.Refresh();
-        }*/
-
-
 
         /// Importing a JSON file and returning a List<CryptoPrice>
         public List<CryptoPrice> LoadFromJsonFile(string filePath)
