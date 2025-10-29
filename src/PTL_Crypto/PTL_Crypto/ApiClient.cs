@@ -18,13 +18,32 @@ namespace PTL_Crypto
     {
         private readonly HttpClient _httpClient = new HttpClient(); //creating an object of the HttpClient class, which is used to send HTTP requests
 
+
+        /// <summary>
+        /// Simple delay to avoid hitting API rate limits (CoinGecko allows ~50 req/min).
+        /// Calls this before every API request.
+        /// </summary>
+        private static DateTime _lastRequestTime = DateTime.MinValue;
+
+        private static async Task EnforceRateLimitAsync(int delayMs = 3000)
+        {
+            var now = DateTime.Now;
+            var elapsed = (now - _lastRequestTime).TotalMilliseconds;
+
+            if (elapsed < delayMs)
+                await Task.Delay(delayMs - (int)elapsed);
+
+            _lastRequestTime = DateTime.Now;
+        }
+
+
         // Fetch cryptocurrency price data from CoinGecko API
         public async Task<List<CryptoPrice>> GetCryptoPricesAsync(string coin, int days)
         {
             try
             {
-                // Delay 2 sec before the request to reduce 429 errors
-                await Task.Delay(2000);
+                // Delay 3 sec before the request to reduce 429 errors
+                await EnforceRateLimitAsync();
 
                 // Build API URL dynamically based on coin and period (days)
                 string url = $"https://api.coingecko.com/api/v3/coins/{coin}/market_chart?vs_currency=usd&days={days}";
@@ -64,8 +83,8 @@ namespace PTL_Crypto
         {
             try
             {
-                // Delay 2 sec before the request to reduce 429 errors
-                await Task.Delay(2000);
+                // Delay 3 sec before the request to reduce 429 errors
+                await EnforceRateLimitAsync();
 
                 string url = "https://api.coingecko.com/api/v3/coins/list";
                 // http request
