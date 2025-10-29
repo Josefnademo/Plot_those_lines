@@ -237,6 +237,33 @@ afin de visualiser et analyser les prix historiques sans passer par l’API.
 - Afficher les données dans `textBoxRawData`.
 - Ajouter une gestion des erreurs si le fichier est invalide ou vide.
 
+---
+
+#### 10. Ajouter la persistance de l’état de l’application (local JSON)
+
+**En tant qu’utilisateur de l’application PTL_Crypto**,
+je veux que mon état (cryptos sélectionnées et visibles sur le graphique) soit sauvegardé,
+afin de retrouver le même affichage au redémarrage de l’application.
+
+**[TA] Critères d’acceptation :**
+
+- Lors de la fermeture de l’application, l’état courant est enregistré dans un fichier state.json dans le dossier local_data.
+
+- Le fichier contient :
+  - les symboles des cryptomonnaies chargées (LoadedCryptos),
+  - les symboles des cryptomonnaies visibles (VisibleCryptos).
+
+- Au démarrage, si le fichier state.json existe, l’application :
+  - recharge les données locales correspondantes,
+  - restaure les éléments affichés dans checkedListBoxCryptos1,
+  - affiche automatiquement le graphique précédent.
+
+- Si aucune donnée n’est trouvée, l’application démarre avec les paramètres par défaut (une crypto sur 7 jours).
+
+**Objectif technique :**
+Implémenter un système de persistance d’état à l’aide d’un fichier JSON local et le restaurer automatiquement à chaque ouverture.
+
+
 ## 4. Réalisation
 
 ### 4.1 Choix techniques
@@ -252,9 +279,10 @@ afin de visualiser et analyser les prix historiques sans passer par l’API.
 - Namespace principal : PTL_Crypto.
 
 - Classes :
-
-  - FileClient (lis fichier JSON)
-  - CoinInfo ("Coin" information et Override lui à ToString)
+  - Form1 (point d’entrée de l’application et interface principale, Gère les événements utilisateur, appelle les autres classes).
+  - AppState (stockant l’état de l’application entre les sessions).
+  - FileClient (lis fichier JSON).
+  - CoinInfo ("Coin" information et Override lui à ToString).
   - CryptoPrice (modèle de données).
   - ApiClient (récupération JSON).
   - PlotManager (gestion graphique).
@@ -340,7 +368,7 @@ _Il contient les tâches réalisées à chaque séance, la durée et un commenta
 
 - Recherche d’API adaptées (CoinGecko, alternatives).
 - Reformulation des User Stories.
-- Assistance technique pour LINQ et Windows Forms(un des source d'information théorique).
+- Assistance technique pour LINQ et Windows Forms(un des source d'information **théorique**).
 
 Toutes les suggestions ont été vérifiées, adaptées et comprises avant intégration.
 IA a servi à structurer le contenu, corriger les fautes d'orthographe et vérifier la cohérence des User Stories, donc les fautes d'orthographe des stories.
@@ -371,18 +399,34 @@ Le bilan technique permet de faire le point sur les choix technologiques, les m�
 
 - Classes principales :
 
-  - FileClient : lecture de fichiers JSON locaux et conversion en objets CryptoPrice.
-  - ApiClient : récupération des données depuis CoinGecko.
-  - CryptoPrice : modèle de données représentant le prix d’une crypto à un instant donné.
-  - CoinInfo : informations de base sur une crypto (Id, Nom, Symbole).
-  - PlotManager : gestion des graphiques et affichage sur ScottPlot.
+  - **Form1** : point d’entrée de l’application et interface principale.  
+    - Gère les événements utilisateur (boutons, ComboBox, CheckedListBox).  
+    - Appelle les classes `ApiClient`, `FileClient`, et `PlotManager` pour charger et afficher les données.  
+    - Contient la logique de persistance d’état via les méthodes `SaveAppState()` et `LoadAppState()`.  
+    - Met à jour dynamiquement le graphique selon les cryptomonnaies visibles et les fichiers locaux.
+  - **AppState** : modèle simple stockant l’état de l’application entre les sessions.  
+    - Contient deux listes : `LoadedCryptos` (cryptos chargées) et `VisibleCryptos` (cryptos affichées).  
+    - Sérialisé au format JSON dans `local_data/state.json` pour permettre la restauration automatique. 
+  - **ApiClient.cs**  
+    Contient les appels HTTP asynchrones vers l’API CoinGecko.  
+    - Chaque requête est précédée d’un appel à `EnforceRateLimitAsync()` pour éviter les erreurs 429.  
+    - Le parsing des réponses JSON se fait uniquement via LINQ (`Select`, `Where`, `ToList`).
+  - **FileClient.cs**  
+    - Fournit une méthode `LoadPricesFromFile()` pour lire les historiques de prix stockés localement.  
+    - Utilise également LINQ pour transformer les tableaux JSON en objets `CryptoPrice`.
+  - **PlotManager.cs**  
+    - Centralise les opérations de tracé sur `ScottPlot`.  
+    - Gère la mise à jour dynamique du graphique en fonction des cryptos visibles.
+  - **CryptoPrice** : modèle de données représentant le prix d’une crypto à un instant donné.
+  - **CoinInfo** : informations de base sur une crypto (Id, Nom, Symbole).
+
 
 - Méthodologie LINQ :
-
   - Filtrage des données (périodes 7, 30, 90 jours).
   - Transformation des données JSON en séries temporelles.
   - Sélection des cryptos visibles dans le graphique.
   - Réduction des boucles classiques pour un code plus concis et fonctionnel.
+  - stockage l’état de l’application entre les sessions.
 
 ### 8.3 Gestion des erreurs et robustesse
 
@@ -402,10 +446,23 @@ Le bilan technique permet de faire le point sur les choix technologiques, les m�
 - Modularité des classes → facile à maintenir et à étendre (ajout d’une nouvelle crypto ou source de données).
 
 ### 8.6 Difficultés techniques rencontrées
+- **Problèmes liés à l’API gratuite CoinGecko**
+  La principale difficulté rencontrée a été la **limitation de taux ("429 Too Many Requests")** imposée par l’API gratuite de CoinGecko.
+  Comme chaque requête HTTP consomme un quota, l’application dépassait parfois la limite en effectuant plusieurs appels consécutifs (par exemple, lors du rechargement automatique  ou de la comparaison de plusieurs cryptomonnaies).
+  Pour contourner ce problème, j’ai ajouté une méthode EnforceRateLimitAsync(), qui insère un délai entre chaque appel API. Cette approche garantit le respect du quota sans  bloquer l’interface utilisateur, tout en maintenant un comportement asynchrone fluide.
+
+- **Sauvegarde et restauration de l’état utilisateur**
+  Une autre difficulté a concerné la gestion du fichier state.json.
+  Le principal défi était d’assurer une **sauvegarde fiable** (éviter les corruptions de fichiers en cas de fermeture brutale) et une restauration cohérente des données (vérification  de la présence des fichiers locaux avant de les recharger).
+  J’ai implémenté la méthode LoadAppState() dans Form1.cs pour charger automatiquement l’état au démarrage, et SaveAppState() pour enregistrer les paramètres lors de la  fermeture.  
 
 - Conversion correcte des timestamps Unix en DateTime pour l’affichage chronologique.
+
 - Gestion des fichiers JSON importés par l’utilisateur et des séries multiples dans ScottPlot.
-- Passage complet des boucles classiques à LINQ pour toutes les opérations sur les collections.
+
+- **Compatibilité LINQ complète sans boucles classiques pour toutes les opérations sur les collections**
+  J’ai choisi de remplacer toutes les boucles for et foreach par des requêtes LINQ, ce qui a nécessité une réécriture importante du code.
+  La difficulté principale a été d’exprimer certaines logiques complexes (comme la mise à jour des listes ou dictionnaires) de manière fonctionnelle, tout en gardant un code   lisible et performant.
 
 ## 9. bilan personnel
 
@@ -428,6 +485,8 @@ Grâce à la planification et à l’usage de JDT, j’ai pu résoudre ces diffi
 ## 10. Conclusion
 
 L’application Plot Those Lines! (Crypto Edition) est complète, intuitive et fiable.
+Elle repose sur une architecture claire : chaque classe a un rôle précis et communique avec les autres via des interfaces bien définies.
+Le code est 100 % LINQ, ce qui le rend concis, maintenable et conforme aux objectifs pédagogiques du module.
 J’ai pu lier théorie et pratique, produire une documentation structurée et assurer la traçabilité entre User Stories, tests et issues GitHub.
 
 ## 11. Références
