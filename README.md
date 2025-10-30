@@ -61,6 +61,7 @@ Toutes les User Stories sont documentées et suivies sur le [GitHub Project Boar
 - Lancer les tests unitaires : `UnitTest_CryptoPrice (UnitTest1.cs)` (depuis le dossier de la solution)
 
 ## 📝 Documentation
-- [Rapport PDF](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Rapport.pdf) : objectifs, domaine, analyse, réalisation, tests et conclusion.
+- [Rapport PDF](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Rapport.pdf) : Contenu détaillé du projet final(analyse, conception, mise en œuvre, tests et conclusion).
+- [Rapport Markdown](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Rapport.md) : version en ligne du rapport. 
 - [Planification](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Planification.md) : tâches sur 8 semaines.
 - [Journal de travail (JDT)](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Journal-de-Travail_NademoYosef.xlsx) : suivi de l’avancement, difficultés et solutions.
