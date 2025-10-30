@@ -57,6 +57,14 @@ J’ai préféré l’utilisation d’une API JSON plutôt que de fichiers CSV p
 1. L’API permet une intégration dynamique sans téléchargement manuel.
 1. Le format JSON est mieux adapté à la sérialisation en objets C#.
 
+### 2.4. Schéma de fonctionnement de l'application
+
+Le schéma ci-dessous présente le fonctionnement général de l’application, incluant la récupération des données depuis l’API CoinGecko, leur traitement en C# et l'affichage dynamique via ScottPlot.
+
+<p align="center">
+  <img src="https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.drawio.png" />
+</p>
+
 ## 3. Analyse et planification
 
 ### 3.1 User Stories
