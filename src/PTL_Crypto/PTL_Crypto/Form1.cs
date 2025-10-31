@@ -108,7 +108,7 @@ namespace PTL_Crypto
                     Coin = coin,
                     FileName = coin.Id switch
                     {
-                        "btc" => "btc_7days.json",
+                        "btc_" => "btc_7days.json",
                         "eth" => "eth_7days.json",
                         "sol" => "solana_7days.json",
                         "pepe" => "pepe_7days.json",
@@ -292,10 +292,17 @@ namespace PTL_Crypto
         /// <param name="e"></param>
         private async void comboBoxCoins_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxCoins.SelectedItem is CoinInfo coin)
-                await LoadOrAddCrypto(coin.Id, coin.Name, coin.Symbol, 7); // default 7 days
-            else
+            if (comboBoxCoins.SelectedItem is not CoinInfo coin)
+            {
                 MessageBox.Show("Impossible de mettre à jour les données pour cette crypto.");
+                return;
+            }
+
+            // If the data has already been loaded, do not make a new API request
+            if (loadedCryptos.ContainsKey(coin.Symbol))
+                return;
+
+            await LoadOrAddCrypto(coin.Id, coin.Name, coin.Symbol, 7); // default 7 days
         }
 
         private void clbCryptos_SelectedIndexChanged(object sender, EventArgs e)

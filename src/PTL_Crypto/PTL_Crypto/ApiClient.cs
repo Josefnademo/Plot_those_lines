@@ -17,23 +17,25 @@ namespace PTL_Crypto
     internal class ApiClient
     {
         private readonly HttpClient _httpClient = new HttpClient(); //creating an object of the HttpClient class, which is used to send HTTP requests
+        private static DateTime _lastRequest = DateTime.MinValue;
+        private const int MinDelayMs = 1500; // 1.5 sec between requests
 
 
         /// <summary>
         /// Simple delay to avoid hitting API rate limits (CoinGecko allows ~50 req/min).
         /// Calls this before every API request.
         /// </summary>
-        private static DateTime _lastRequestTime = DateTime.MinValue;
+        private static async Task EnforceRateLimitAsync()
+        {   
+            // Calculate the time elapsed since the last API request
+            var diff = DateTime.UtcNow - _lastRequest;
 
-        private static async Task EnforceRateLimitAsync(int delayMs = 3000)
-        {
-            var now = DateTime.Now;
-            var elapsed = (now - _lastRequestTime).TotalMilliseconds;
+            // If the elapsed time is less than the minimum required delay, wait
+            if (diff.TotalMilliseconds < MinDelayMs)
+                await Task.Delay(MinDelayMs - (int)diff.TotalMilliseconds);
 
-            if (elapsed < delayMs)
-                await Task.Delay(delayMs - (int)elapsed);
-
-            _lastRequestTime = DateTime.Now;
+            // Update the timestamp of the last request to the current time
+            _lastRequest = DateTime.UtcNow;
         }
 
 
