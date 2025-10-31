@@ -12,25 +12,25 @@ using static ScottPlot.Generate;
 
 namespace PTL_Crypto
 {
-    // Purpose: Manage the graphical display with ScottPlot.
-
-    /*Methods:*/
+    /// <summary>
+    /// Manages plotting cryptocurrency price data using ScottPlot.
+    /// Handles drawing multiple price series on the same chart,
+    /// clearing plots, and loading price data from JSON files.
+    /// </summary>
     internal class PlotManager
     {
         // Storage of all ScatterPlots for deletion/restoration
         private readonly List<IPlottable> currentPlots = new List<IPlottable>();
 
         /// <summary>
-        /// Plots multiple cryptocurrency price series on the same ScottPlot chart.
-        /// The dictionary key is used as the label for each series.
+        /// Plots multiple cryptocurrency price series on a single ScottPlot chart.
+        /// Each entry in the dictionary represents one coin, where the key is the label
+        /// and the value is the list of price data points.
         /// </summary>
         /// <param name="formsPlot">The FormsPlot control to draw on.</param>
         /// <param name="allPrices">Dictionary with coin label as key and list of CryptoPrice as value.</param>
         public void PlotData(FormsPlot formsPlot, Dictionary<string, List<CryptoPrice>> allPrices)
         {
-
-           
-
             // LINQ: go through each crypto and add Scatter
             allPrices.ToList().ForEach(kvp =>
             {
@@ -62,7 +62,11 @@ namespace PTL_Crypto
                 formsPlot.Refresh();
             });
     }
-        // Deleting charts
+        /// <summary>
+        /// Removes all currently displayed plots from the ScottPlot chart
+        /// and refreshes the control.
+        /// </summary>
+        /// <param name="formsPlot">ScottPlot control to clear</param>
         public void ClearPlots(FormsPlot formsPlot)
         {
             currentPlots.ForEach(p => formsPlot.Plot.Remove(p));
@@ -71,7 +75,12 @@ namespace PTL_Crypto
         }
 
 
-        /// Importing a JSON file and returning a List<CryptoPrice>
+        /// <summary>
+        /// Loads historical price data from a local JSON file.
+        /// Converts Unix timestamps to DateTime and returns a list of CryptoPrice objects.
+        /// </summary>
+        /// <param name="filePath">Full path to the JSON file.</param>
+        /// <returns>List of CryptoPrice values parsed from JSON.</returns>
         public List<CryptoPrice> LoadFromJsonFile(string filePath)
         {
             string json = File.ReadAllText(filePath);

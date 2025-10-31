@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PTL_Crypto
 {
+    /// <summary>
+    /// Role: store a state of application
+    /// </summary>
     class AppState
     {
         public List<string> LoadedCryptos { get; set; } = new();

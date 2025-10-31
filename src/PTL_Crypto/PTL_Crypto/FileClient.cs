@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 namespace PTL_Crypto
 {
     /// <summary>
-    /// Reads JSON
+    /// Loads crypto price data from a local JSON file and converts it into a list of CryptoPrice objects.
+    /// Optionally displays raw formatted price data in a TextBox(ComboBox).
     /// </summary>
+    /// <param name="filePath">Full path to the JSON file.</param>
+    /// <param name="textBoxRawData">Optional TextBox for showing formatted raw data (time and price).</param>
+    /// <returns>List of parsed CryptoPrice entries from the file.</returns>
     public class FileClient
     {
         // Reads JSON from a local file and converts into a list of CryptoPrice objects

@@ -37,7 +37,12 @@ namespace PTL_Crypto
         }
 
 
-        // Fetch cryptocurrency price data from CoinGecko API
+        /// <summary>
+        /// Fetch cryptocurrency price data from CoinGecko API and put it in List<CryptoPrice>
+        /// </summary>
+        /// <param name="coin"></param>
+        /// <param name="days"></param>
+        /// <returns></returns>
         public async Task<List<CryptoPrice>> GetCryptoPricesAsync(string coin, int days)
         {
             try
@@ -75,10 +80,17 @@ namespace PTL_Crypto
             }
 
         }
+
         /// <summary>
-        /// 
+        /// Retrieves a list of all cryptocurrencies from the CoinGecko API.
+        /// The method enforces a rate limit delay, sends an HTTP request,
+        /// parses the JSON response, maps the data to <see cref="CoinInfo"/> objects,
+        /// and filters out invalid or empty records. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// /// A list of <see cref="CoinInfo"/> representing valid cryptocurrencies.
+        /// Returns an empty list if an error occurs.
+        /// </returns>
         public async Task<List<CoinInfo>> GetCoinsListAsync()
         {
             try

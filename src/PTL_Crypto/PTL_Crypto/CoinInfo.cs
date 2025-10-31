@@ -11,12 +11,15 @@ namespace PTL_Crypto
     /// </summary>
     public class CoinInfo
     {
-
         public string Id { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }
 
-        // Override ToString() so the ComboBox displays "Bitcoin (BTC)" nicely.
+        /// <summary>
+        /// Formats the coin info for display in ComboBox as "Bitcoin (BTC)"
+        /// Includes null-safety: if name or symbol are missing, substitutes default values
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {// Implementing "null protection":
          // Sometimes CoinGecko API returns coins without a symbol or name → to prevent this, set "?" or "Unknown"

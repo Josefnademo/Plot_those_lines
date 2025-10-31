@@ -13,6 +13,10 @@ using System.IO;
 
 namespace PTL_Crypto
 {
+    /// <summary>
+    /// Main form of the application. Manages UI, coordinates API calls, file loading,
+    /// plotting, and application state persistence.
+    /// </summary>
     public partial class Form1 : Form
     {
         // --- Instances of helper classes ---
@@ -33,7 +37,8 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// --- On Form Load: load the list of available coins (from API or local fallback) ---
+        /// On form load: attempts to restore application state, loads available coin list (API fallback to local),
+        /// sets up ComboBox and default graphs, and restores visibility state.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -41,38 +46,6 @@ namespace PTL_Crypto
         {
             // Restore previously saved state first 
             LoadAppState();
-
-
-           /* // Path to state.json for applicatino state monitoring
-            var statePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data", "state.json");
-
-
-            if (File.Exists(statePath))
-            {
-                var json = File.ReadAllText(statePath);
-                var state = JsonSerializer.Deserialize<AppState>(json);
-
-                if (state?.LoadedCryptos != null)
-                {
-                    foreach (var symbol in state.LoadedCryptos)
-                    {
-                        string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data", $"{symbol.ToLower()}_7days.json");
-                        if (File.Exists(filePath))
-                        {
-                            var prices = _fileClient.LoadPricesFromFile(filePath);
-                            loadedCryptos[symbol] = prices;
-                            visibleCryptos.Add(symbol);
-
-                            if (!clbCryptos.Items.Contains(symbol))
-                                clbCryptos.Items.Add(symbol, true);
-                        }
-                    }
-
-                    UpdatePlot();
-                }
-            }*/
-
-
 
             List<CoinInfo> coins;
             try
@@ -122,7 +95,7 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// Method for loading a chart for a selected coin (Loads local JSON files)
+        /// Loads a default graph for a selected coin from local files (Loads local JSON files)
         /// </summary>
         private async Task LoadDefaultGraph()
         {
@@ -163,13 +136,14 @@ namespace PTL_Crypto
 
 
         /// <summary>
-        /// ---  Main universal method — loads or add crypto data from API, local or import file.
+        /// Load or add a cryptocurrency series by ID. Tries import file, then API, then local fallback.
+        /// Saves loaded data into memory, marks it visible and updates UI controls and chart.
         /// </summary>
-        /// <param name="coinId"></param>
-        /// <param name="coinName"></param>
-        /// <param name="coinSymbol"></param>
-        /// <param name="days"></param>
-        /// <param name="importFile"></param>
+        /// <param name="coinId">Coin identifier for API/local file lookup.</param>
+        /// <param name="coinName">Human-readable coin name.</param>
+        /// <param name="coinSymbol">Ticker symbol (e.g., BTC).</param>
+        /// <param name="days">Number of days of data to request or load.</param>
+        /// <param name="importFile">Optional path to a JSON file to import.</param>
         /// <returns></returns>
         private async Task LoadOrAddCrypto(string coinId, string coinName, string coinSymbol, int days = 7, string importFile = null)
         {
@@ -228,7 +202,8 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// --- Method for updating a graph based on visibility ---
+        /// Rebuilds the plot based on currently visible cryptos (visibleCryptos HashSet).
+        /// Clears the plot and uses PlotManager to draw selected series.
         /// </summary>
         private void UpdatePlot()
         {
@@ -246,7 +221,7 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// Controlling visibility (CheckedListBox or buttons)
+        /// Handles CheckedListBox ItemCheck to add/remove symbols to visibility set and trigger plot update.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -265,8 +240,8 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// --- Import custom JSON file (.json only) ---
-        /// </summary>
+        /// Opens a file dialog to import a JSON file. Extracts name/symbol from filename and loads that file.
+        /// </summary>>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnImportJson_Click(object sender, EventArgs e)
@@ -283,9 +258,9 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// Load crypto from ComboBox for 1/7/30/365 days
+        /// Loads crypto data for selected coin in the ComboBox for given days (1,7,30,365).
         /// </summary>
-        /// <param name="days"></param>
+        /// <param name="days">Days of data to load.</param>
         /// <returns></returns>
         private async Task LoadCryptoData(int days)
         {
@@ -311,7 +286,7 @@ namespace PTL_Crypto
         { await LoadCryptoData(365); }
 
         /// <summary>
-        /// --- When user selects another crypto in the ComboBox ---
+        /// When user selects another crypto in the ComboBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -337,7 +312,7 @@ namespace PTL_Crypto
         private readonly string stateFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "local_data", "state.json");
 
         /// <summary>
-        /// Saves the current application state (loaded and visible cryptos) into a local JSON file.
+        /// Save current application state (which coins were loaded and which are visible) to local state.json.
         /// </summary>
         private void SaveAppState()
         {
@@ -357,7 +332,8 @@ namespace PTL_Crypto
         }
 
         /// <summary>
-        /// Restores the last saved state of the app (visible cryptos and chart data).
+        /// Restore application state from state.json: load local files for previously loaded coins,
+        /// restore visibility and CheckedListBox items, then update the plot.
         /// </summary>
         private async Task LoadAppState()
         {
