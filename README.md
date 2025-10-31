@@ -32,14 +32,14 @@ et le suivi de l’avancement via un journal de travail (JDT).
 - `maquette/` –  Maquette `pdf` du projet
 - `/src` – Code source du projet
 - `.gitignore` – Fichiers ignorés
-- GitHub Project – Suivi des User Stories
+- [GitHub Project](https://github.com/users/Josefnademo/projects/5/views/1) – Suivi des User Stories
 
 ## 📑 User Stories
 Toutes les User Stories sont documentées et suivies sur le [GitHub Project Board](https://github.com/users/Josefnademo/projects/5)
 
 ## 🧪 Tests
 
-### Tests unitaires
+### [Tests unitaires](https://github.com/Josefnademo/Plot_those_lines/tree/main/src/PTL_Crypto/UnitTest_CryptoPrice)
 - Vérification du parsing correct du JSON.
 - Vérification de la conversion timestamp → DateTime.
 - Vérification de la sélection de période (7/30/90 jours).
@@ -54,7 +54,7 @@ Toutes les User Stories sont documentées et suivies sur le [GitHub Project Boar
 ## 🚀 Exécution
 
 1. Cloner le repo `git clone https://github.com/Josefnademo/Plot_those_lines.git`
-2. Ouvrir le projet sous Visual Studio
+2. Ouvrir le projet sous Visual Studio `src\PTL_Crypto\PTL_Crypto.sln`
 3. Lancer l’exécutable
 
 ## 🔧 Développement & Tests
