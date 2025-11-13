@@ -62,8 +62,21 @@ J’ai préféré l’utilisation d’une API JSON plutôt que de fichiers CSV p
 Le schéma ci-dessous présente le fonctionnement général de l’application, incluant la récupération des données depuis l’API CoinGecko, leur traitement en C# et l'affichage dynamique via ScottPlot.
 [le lien vers une schema de fonctionnement d'application](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.drawio.png)
 <p align="center">
-  <img src="https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.drawio.png" />
+  <img src="https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.png" />
 </p>
+
+Le fonctionnement général de l’application PTL_Crypto repose sur un cycle complet de chargement, affichage et sauvegarde des données.
+Lors du lancement, la méthode Form1_Load() tente de charger la liste des cryptomonnaies depuis l’API. En cas d’échec (limite d’accès ou absence de réseau), les données locales JSON sont utilisées.
+L’utilisateur sélectionne ensuite une crypto dans la comboBoxCoins, ce qui appelle LoadOrAddCrypto(). Cette méthode essaie de récupérer les données dans l’ordre suivant :
+1 fichier importé, 2 API, 3 fichier local.
+
+Les cryptos chargées sont stockées en mémoire (loadedCryptos), marquées comme visibles, et le graphique est actualisé par UpdatePlot(), qui trace les données via PlotManager.PlotData.
+L’affichage peut être ajusté grâce au checkedListBoxCryptos, où chaque case permet d’afficher ou de masquer une crypto.
+Les boutons de période (1, 7, 30, 365 jours) appellent LoadCryptoData() pour recharger la crypto visible selon la période choisie.
+Le bouton d’import JSON est optionnel et permet d’ajouter de nouvelles cryptos à partir d’un fichier local.
+
+Enfin, lors de la fermeture (Form1_FormClosing()), l’état actuel (cryptos chargées et visibles) est sauvegardé dans un fichier state.json par SaveAppState().
+Au prochain démarrage, LoadAppState() restaure automatiquement cet état, formant ainsi un cycle complet et autonome entre le chargement, l’affichage et la persistance des données.
 
 ## 3. Analyse et planification
 
