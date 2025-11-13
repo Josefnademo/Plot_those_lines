@@ -60,9 +60,10 @@ J’ai préféré l’utilisation d’une API JSON plutôt que de fichiers CSV p
 ### 2.4. Schéma de fonctionnement de l'application
 
 Le schéma ci-dessous présente le fonctionnement général de l’application, incluant la récupération des données depuis l’API CoinGecko, leur traitement en C# et l'affichage dynamique via ScottPlot.
-[le lien vers une schema de fonctionnement d'application](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.drawio.png)
+[le lien vers une schema de fonctionnement d'application](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.png)
+
 <p align="center">
-  <img src="https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.png" />
+  <img src="https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/schema%20de%20fonctionnement%20d'application.png" alt="schema de fonctionnement d'application" />
 </p>
 
 Le fonctionnement général de l’application PTL_Crypto repose sur un cycle complet de chargement, affichage et sauvegarde des données.
