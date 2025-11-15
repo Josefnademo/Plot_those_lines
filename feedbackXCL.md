@@ -54,3 +54,10 @@
 - Ecologie (.gitignore): OK
 - Attitude groupe: vous devez faire mieux. Vous étiez absent hier, vous m'avez rien annoncé dans le canal Teams.
 - Attitude personnelle: OK
+
+## Final
+- Qualité: vous avez fait quelques corrections, c'est bien. Il en resterait encore quelques-unes à faire. Par exemple la classe Form1 ou le contrôle formsPlot1. Mais globalement c'est OK.
+- La release est presque nickel. Seul défaut : le journal de travail qui doit être en format PDF. Mais c'est OK aussi
+- US : cela reste encore un petit peu difficile de bien comprendre quelles sont les US qui définissent véritablement le comportement de votre application, mais c'est OK quand même.
+
+Projet validé
