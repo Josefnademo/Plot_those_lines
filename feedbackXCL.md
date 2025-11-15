@@ -59,5 +59,8 @@
 - Qualité: vous avez fait quelques corrections, c'est bien. Il en resterait encore quelques-unes à faire. Par exemple la classe Form1 ou le contrôle formsPlot1. Mais globalement c'est OK.
 - La release est presque nickel. Seul défaut : le journal de travail qui doit être en format PDF. Mais c'est OK aussi
 - US : cela reste encore un petit peu difficile de bien comprendre quelles sont les US qui définissent véritablement le comportement de votre application, mais c'est OK quand même.
+- Qu'est-ce que c'est que ces pieds de page dans votre rapport ?
+<img width="1750" height="119" alt="image" src="https://github.com/user-attachments/assets/2ddc24d1-2a96-4caf-b73d-f808140b902d" />
+
 
 Projet validé
