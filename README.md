@@ -63,5 +63,5 @@ Toutes les User Stories sont documentées et suivies sur le [GitHub Project Boar
 ## 📝 Documentation
 - [Rapport PDF](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Rapport.pdf) : Contenu détaillé du projet final(analyse, conception, mise en œuvre, tests et conclusion).
 - [Rapport Markdown](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Rapport.md) : version en ligne du rapport. 
-- [Planification](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Planification.md) : tâches sur 8 semaines.
+- [Planification](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Planification-initiale.md) : tâches sur 8 semaines.
 - [Journal de travail (JDT)](https://github.com/Josefnademo/Plot_those_lines/blob/main/doc/Journal-de-Travail_NademoYosef.xlsx) : suivi de l’avancement, difficultés et solutions.
